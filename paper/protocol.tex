@@ -7,9 +7,9 @@ The pseudo-code of the protocol is given in Algorithm~\ref{DA} and Algorithm~\re
 {\pName} consists of two stages: detecting stage and 
 connecting stage. 
 \begin{itemize}
-    \item \textbf{Stage 1: detecting Stage.} In this stage, an agent attempts to
+    \item \textbf{Stage 1: detecting stage.} In this stage, an agent attempts to
     detect whether there are nearby peers, regardless of who they are. 
-    \item \textbf{Stage 2: connecting Stage} In this stage, an agent attempts to 
+    \item \textbf{Stage 2: connecting stage} In this stage, an agent attempts to 
     identify the nearby peer(s) and record the encounter process to its log.
 \end{itemize}
 
@@ -206,7 +206,7 @@ to notify its transmitting peers of the transmission outcomes,
 and hence they take measures to reduce the collisions.
 
 Each time slot is divided into two sub-slots and every 
-$T_2$ complete time slots consists of a round.. 
+$T_2$ complete time slots consists of a round.
 Agents execute transmission or reception in the first sub-slot, 
 and maintain the EncounterList and reply a beacon in the second sub-slot (if receive a message 
 successfully in the first sub-slot). The algorithm in detecting stage is formulated as Alg.~\ref{CA}.
@@ -216,7 +216,7 @@ real world, thus the communication connectivity stays stable in a round.
 However, due to the movements of agents, the communication connectivity
 may change from round to round, so all the parameters will be 
 initialized at the beginning of each round and adaptively adjusted later 
-according to the transmission outcome..
+according to the transmission outcome.
 
 Since the number of the nearby peers is unknown to each agent, 
 the transmitting probability is initially set as $\frac{1}{2}$.
