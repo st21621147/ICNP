@@ -1,0 +1,109 @@
+\section{System Model}
+\label{sectionmodel}
+
+
+\subsection{Communication Model}
+
+
+
+An agent that has its radio on can choose to be in the $Transmit$ state
+or the $Listen$ state:
+\begin{itemize}
+\item \textbf{Transmit state:} an agent transmits (broadcasts) 
+a packet containing its ID on the channel;
+\item  \textbf{Listen state:} an agent listens on 
+the channel to receive messages from peers.
+\end{itemize}
+
+Suppose time is divided into slots of equal length $t_0$
+, which is assumed to be sufficient to finish a complete
+communication process (one agent transmits a message including its ID and
+a peer receives the message).
+
+\textbf{Duty cycle mechanism.} In the wildlife tracing system \emph{ATLAS}, 
+each agent (animal) is equipped with energy-restricted tags.
+An agent has to turn off the radio to save
+energy for most of the time and may only be active 
+(transmitting or receiving) during a fraction $\theta$ of the time.
+%, where $\theta$ is typically $1/100$ or less.
+In each time slot, an agent $u_i$ adopt an action as:
+$$ s_i^t=\left\{
+\begin{aligned}
+&Sleep  & & & &{sleep~ with~ probability~ (1-\theta_i)}  	 \\
+&Transmit  & & & &{transmit~ with~ probability~ \theta_i p}	\\
+&Listen  & & & &{listen~ with~ probability~\theta_i(1-p)}	\\
+\end{aligned}
+\right.
+$$
+\emph{Duty cycle} is defined as the fraction of time an agent turns its radio on, 
+which is formulated as:
+$$\theta_i=\frac{|\{t: 0\leq t<t_0, s_i(t) \in \{Transimit,Listen\}\}|}{t_0}.
+$$
+
+\subsection{Interference Model}
+
+We consider graph model as the interference model in our protocol. 
+Graph model is a popular one that enables the development of
+efficient algorithms for crucial networking problems. Some other models,
+such as the signal to interference plus noise ratio (\emph{SINR}) model,
+are more complicated and lack good algorithmic features. 
+In addition, it is shown that SINR can be transformed to the graph model by
+particular means.
+
+In the graph model, we assume that the communication range of each agent 
+is $D$ meters and an agent $u_i$ can discover its nearby peer $u_j$ 
+in time slot $t$ if and only if $u_j$ is the only peer in $u_i$'s range 
+that transmits and $u_i$ is listening in the slot.
+
+Suppose the distance between two nodes $u_i$ and $u_j$ is $\Delta_{i,j}$.
+The connectivity of the edge $e_{i,j}$ in the graph model is formulated as:
+$$ \omega_e=\left\{
+\begin{aligned}
+&0  & & &   &D \leq \Delta_{i,j}	 \\
+%&\phi_{i,j}  & & & 	&d \leq \Delta_{i,j} \leq D\\
+&1  & & & &\Delta_{i,j} \leq D	\\
+\end{aligned}
+\right.
+$$
+%where $\varphi(\Delta)$ is an inverse function 
+%(e.g., the weight is inversely proportional to the distance).
+ 
+An agent $u_i$ can discover its peer $u_j$ in
+time slot $t$ if and only if $u_j$ is the only peer transmitting 
+in the range of $u_i$ ($\Delta_{i,j} \leq D$) and $u_i$ is listening in the slot.
+An agent suffers from collisions when it receives simultaneous messages. 
+
+
+\textbf{Collision detection mechanism.}
+A listening agent can distinguish whether collisions occur or no nearby peer 
+is transmitting, apart from successful discovery. 
+
+\subsection{Problem formulation}
+
+In this paper, we study the encounter problem in a wildlife 
+tracing system. We first give the definition of the \emph{Encounter process}.
+\begin{definition}
+Encounter is defined as the process that 
+an agent detects and monitors a period of close proximity a wildlife tracking system
+to another peer. 
+\end{definition}
+
+The problem in this paper is formulated as follows:
+\begin{problem}
+    We define a $D$-encounter problem as a least
+    time interval of $T_0$ during which agent $u_i$ and $u_j$ satisfying
+    $\Delta_{i,j}(t) \leq D$.
+\end{problem}
+
+The aim is to design a protocol to guarantee any $D$-encounter 
+can be detected and recorded within $T$ time slots with high probability 
+($T$ is the upper bound of the protocol, e.g. $T=O(n\ln n)$).
+
+We look into the problem and find the key challenge is the uncertainty of dynamic movements
+of agents. Despite the dynamicity in this real system, 
+when $T$ is relatively short (compared to the kinematic velocity of agents) in the 
+real world (e.g., less than $1$ second),
+we assume the communication connectivity of the agents is constant in $T$
+time slots. 
+
+\#Clique description (TBD) ...
