@@ -110,17 +110,17 @@ We show the correctness of the construction formally.
 \begin{lemma}
 \label{RDS1}
 Set $R = \{r_0, r_1, ..., r_{\lambda + \mu - 1}\}$ constructed in Alg. \ref{RDS} is a RDS,
-where $|R| = \lambda + \mu = \lceil \sqrt{N}  \rceil + \lceil \frac{\lceil \sqrt{N} \rceil}{2} \rceil
-\approx \lceil \frac{3\sqrt{N}}{2}  \rceil$.
+where $|R| = \lambda + \mu = \lceil \sqrt{T}  \rceil + \lceil \frac{\lceil \sqrt{T} \rceil}{2} \rceil
+\approx \lceil \frac{3\sqrt{T}}{2}  \rceil$.
 \end{lemma}
 \begin{IEEEproof}
-Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $N$),
+Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $T$),
 an opposing pair $(a_j,a_i)$ exists such that
-$a_j - a_i \equiv (N-d)$ (mod $N$). Thus we only need to find
-at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor N/2 \rfloor]$.
+$a_j - a_i \equiv (T-d)$ (mod $T$). Thus we only need to find
+at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor T/2 \rfloor]$.
 
 In the construction, $\lambda$ in Line \ref{RDSline1} is the smallest integer satisfying
-$\lambda^2 \geq N$. Every $d$ in range $[1, \lfloor N/2 \rfloor]$
+$\lambda^2 \geq T$. Every $d$ in range $[1, \lfloor T/2 \rfloor]$
 can be represented as: $ d = 1 + j \times \lambda - i$, where $1 \leq j \leq \mu,
 1 \leq i \leq \lambda$. Thus, there exists $a_j = 1 + j \times \lambda$
 from Line. \ref{RDSline2} and $a_i = i$ from Line. \ref{RDSline3}

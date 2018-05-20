@@ -48,25 +48,23 @@ turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which c
     slots with high probability.
 \end{lemma}
 \begin{IEEEproof}
-    First, consider $k$ agents in the detecting stage at the beginning. 
+    First, consider $k$ agents all in the detecting stage at the beginning. 
     By Lemma~\ref{RDS}, any two peers can turn on their radios in the same 
-    slot at least once during every period of $T_0$. 
+    slot at least once during every period of $T_0$ and both of them will
+    turn to the connecting stage in the second sub-slot if one is transmitting
+    and the other is listening in the first sub-slot. 
     For a specific agent,
     the probability it detects a peer in a period of $T_0$ is at least
-    $Pr \geq 1 - (\frac{1}{2} +\frac{1}{2^k})$.
+    $Pr \geq 1 - \frac{1}{2^{k-1}}$.
     Hence given a small enough constant $\eta$,  
-    it holds with high probability that an agent detects peer(s) in 
-    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})}$ periods, which is 
-    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
+    it holds with high probability that an agent will turn to connecting stage in 
+    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}}$ periods, which is 
+    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
     in total.    
 
-
-    Consider two agents encounter at a time and one turn to the connecting stage first.
-    Then the other will switch to the connecting stage very soon since the prior one in connecting
-    stage increases its transmission probability (because there is no duty cycle in the 
-    connecting stage) to let other peers detect it. 
-
- 
+    Then, consider when there is at least one agent in the connecting stage.
+    Obviously, an agent in the detecting stage will turn to the connecting stage immediately if it 
+    transmits in the first sub-slot.
 \end{IEEEproof}
 
 
