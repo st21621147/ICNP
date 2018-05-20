@@ -2,15 +2,13 @@
 \label{sectionmodel}
 
 In this paper, we study the encounter problem in a wildlife 
-tracing system. 
-We call individual animals as \emph{agents}, 
+tracing system. We call individual animals as \emph{agents}, 
 and \emph{peers} are referred as other agents that distinguish from 
 a specific one.
-The definition of the \emph{Encounter process} is formulated as follows.
+The definition of the \emph{encounter process} is formulated as follows.
 \begin{definition}
 Encounter is defined as the process that 
-an agent detects and records message
-from other peer(s) if they keep at least $T_0$ slots of 
+an agent detects and records other peer(s) if they keep a period of 
 close proximity $\Delta \leq D$
 in the wildlife tracking system. 
 \end{definition}
@@ -23,41 +21,44 @@ In the following, we describe the system model for theoretical analysis in this 
 
 % First, we present the communication model in this paper.
 
-In the  wildlife tracing system {\sysname}, the encounter process 
-is a common biological behavior and
+In the  wildlife tracing system {\sysname}, the encounter behavior  
+is a common biological phenomenon and
 happens when more than one agents gather closely, constituting a 
 single clique of size $k$~($k \geq 2$).
 Note that, $k$ is not known to each agent and the whole 
 clique composes a sing-hop network for communication due to the proximity. 
 
-Each agent is equipped with a tag containing radio. 
-An agent that has its radio on can choose to be in the $Transmit$ state
-or the $Listen$ state:
+Each agent is equipped with a radio tag. 
+An agent that has its radio on can choose to be in the $transmit$ state
+or the $listen$ state:
 \begin{itemize}
 \item \textbf{Transmit state:} an agent transmits (broadcasts) 
 a message containing its ID on the channel;
 \item  \textbf{Listen state:} an agent listens on 
 the channel to receive messages from peers.
 \end{itemize}
+We also call an agent keeps in the \emph{listen} state for a period of consecutive slots 
+as \emph{quiet} state.
 
-Suppose time is divided into slots of equal length $t_0$
+Suppose time is divided into slots of equal length $\hat{t_0}$
 , which is assumed to be sufficient to finish a complete
 communication process (one agent transmits a message including its ID and
 a peer receives the message).
 
-An agent transmit successfully in a time slot if and only if 
+An agent transmits successfully in a time slot if and only if 
 it is the only one transmitting and all the other peer(s) will
-receive its message and record its ID. Otherwise the channel is detected
+receive its message and record its ID in this single-hop network. Otherwise the channel is detected
 as \emph{idle} if there is no transmission and \emph{busy} if there 
-are simultaneous messages.
+are simultaneous messages incurring collisions on the channel.
 
 In the wildlife tracing system {\sysname}, 
 on the one hand,
-each agent (animal) is equipped with an energy-restricted tag;
-on the other hand, encounter process happens occasionally, and
-it is a waste of energy if transmitting while there is no encounter with other peer(s). 
-Thus in order to keep a balance between the energy consumption 
-and the efficiency of encounter process, we introduce the duty cycle mechanism.
+each agent is equipped with an energy-restricted tag;
+on the other hand, encounter process happens occasionally, and thus
+it is a waste of battery energy if an agent turns on the radio while it does 
+not encounter with any peer(s) at the moment. 
+Therefore, in order to keep a balance between the energy consumption 
+and the efficiency of the encounter process, we introduce the duty cycle mechanism~\cite{Zhang2017Performance}.
 
 \textbf{Duty cycle mechanism.} 
 An agent has the capability to turn off the radio to save
@@ -65,7 +66,8 @@ energy for most of the time, and may only be active
 (transmitting or receiving) during a fraction $\theta$ of the time.
 %, where $\theta$ is typically $1/100$ or less.
 
-Incorporating the duty cycle mechanism, in each time slot an agent $u_i$ is able to adopt an action as:
+Incorporating the duty cycle mechanism into the Mac layer of the radio tag, 
+in each time slot an agent $u_i$ is able to adopt an action as:
 $$ s_i^t=\left\{
 \begin{aligned}
 &Sleep  & & & &{sleep~ with~ probability~ (1-\theta_i)}  	 \\
@@ -116,28 +118,31 @@ $$
 % in the range of $u_i$ ($\Delta_{i,j} \leq D$) and $u_i$ is listening in the slot.
 % An agent suffers from collisions when it receives simultaneous messages. 
 
+Next, we introduce another efficient technique called collision detection mechanism.
+This technique is carried out by the physical carrier sensing~\cite{Yang2005On}, which is part of 
+the $802.11$ standard, and provided by a Clear Channel Assessment (CCS) circuit.
 
 \textbf{Collision detection mechanism.}
 A listening agent can distinguish whether the channel is \emph{idle} or \emph{busy}, 
-apart from successful receiving a message. 
+apart from successfully receiving a message. 
 
 \subsection{Problem formulation}
 
-We formulate the problem in this paper as follows:
+We formulate the problem in this paper as follows.
 \begin{problem}
+    Consider $\hat{T}$ slots which is a small enough period in reality.
     We define an encounter problem as to design a protocol to guarantee 
     all the agents in the clique can receive message from each other at least once 
-    if they encounter for at least $T$ ($T \leq T_0$) time 
-    slots~(i.e., $T$ is the upper bound of the protocol). 
+    if they encounter for at least $\hat{T}$ time slots and record the encounter process. 
 \end{problem}
 
 
 We look into the problem and find the key challenge is 
 the uncertainty of dynamic movements
 of agents. Despite the dynamicity in this real system, 
-when $T_0$ is short enough relative to 
+when $\hat{T}$ is short enough relative to 
 the time required for an agent to move a step~(a short distance)
 in reality~(e.g., less than $1$ second),
 we can make a reasonable assumption that the communication 
-connectivity of the agents is stable during each $T_0$ time slots. 
+connectivity of the agents is stable during each $\hat{T}$ time slots. 
 

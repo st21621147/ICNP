@@ -22,17 +22,19 @@ and $listen$ state.
 The key idea of {\pName} is that, any single agent keeps in detecting 
 stage to reduce ineffective energy consumption. When encounter happens, 
 it detects the existence of nearby peers and turns to the connecting stage 
-to identify those peers (or a peer) and record the encounter process to its log. 
-After the encounter process is finished, the agent turns back to the detecting stage.
+to identify those peers (or a peer) as fast as possible and record the encounter process to its log. 
+when the encounter process is determined to be finished in the connecting stage, 
+the agent turns back to the detecting stage.
 
 \begin{remark}
     In the {\pName} protocol, there is no need to synchronize the stage between agents and
-    {\pName} still works in this case. 
+    {\pName} still works when encounter peers are in different stage, e.g., an agent in detecting 
+    stage bursts into a stable clique in connecting stage. 
     The proof of correctness will be presented 
     in section~\ref{sectionanalysis}. 
 \end{remark}
 
-In the following subsections, we describe the operations of these two stages in detail. 
+In the following, we describe the operations of these two stages in detail. 
 
 \subsection{Detecting stage}
 
@@ -40,14 +42,15 @@ In the detecting stage,
 energy efficiency is achieved by the duty cycle mechanism, 
 e.g., denote the predefined duty cycle for 
 all the agents is $\theta$, the tag radio of each agent will work
-$\theta T_0$ time slots in every period of $T_0$. However, it is very ineffective
+$\theta T_0$ slots in every period of $T_0$ slots. 
+
+However, it is very ineffective
 when two agents encounter and one is in $sleep$ state while the other is transmitting
 or listening. 
-
-To technically achieve synchronizing the time that agents turn on the radio,
-we first introduce the Relax Difference Set (RDS).
+To technically achieve synchronizing the time that agents turn on the radio without extra cost,
+we introduce the technique of Relax Difference Set (RDS)~\cite{luk1997two}.
 We use the RDS technique to guarantee that every encounter pair 
-of agents turn on the radio in the same time slot at least once in each round $T_0$.
+of agents turn on the radio in the same slot at least once in each round $T_0$.
 
 RDS is an efficient tool to construct cyclic quorum systems. 
 The definition is:
@@ -67,7 +70,7 @@ under $Z_{10}$:
     &2 - 1 = 1,\quad 3 - 1 = 2,\quad 6 - 3 = 3,\quad 6 - 2 = 4, \\
     &6 - 1 = 5,\quad {2 - 6 = 6}~{(mod~10)},\quad \dots,\quad \dots, 
 \end{align*}
-In every round of $10$ time slots, for any $i = \{0,1,\dots,9\}$, if $i \in R$, then
+In every period of ten slots, for any $i = \{0,1,\dots,9\}$, if $i \in R$, then
 the agent turns on its radio in the $i^{th}$ slot in this round; otherwise it turns to the $sleep$ state.
 Consider any two agents in the detecting stage: if the time drift between their time rounds is $\delta$,
 there exists at least one ordered pair $(a_i,a_j)$ in $R$ such that $a_i - a_j \equiv \delta$ (mod $10$).
@@ -142,15 +145,15 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
 
 Based on the RDS, we present the operations in the detecting stage as Alg.~\ref{DA}.
 An agent turns on its radio according to the RDS sequence and in each active slot it
-transmits a beacon with probability $\omega_0$ and listen with probability $1-\omega_0$.
+transmits a beacon with probability $\omega_0$ and listens with probability $1-\omega_0$.
 As discussed before, the aim of this stage is to detect nearby peer(s) as fast as possible 
-(if exists), and either successful transmission or detecting collisions activate the agent
-to the connecting stage. Here we fix the transmitting probability as $\omega_0 = \frac{1}{2}$ 
+(if exists), and either successful transmission or detecting busy on the channel activates the agent
+to switch to the connecting stage. Here we fix the transmitting probability as $\omega_0 = \frac{1}{2}$ 
 since it is the optimal probability for two-agent encounter, the most common case
-in the {\sysname} system (??Not sure). 
+in the {\sysname} system. 
 \begin{remark}
     Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
-    the probability that an agent detects a peer in a time slot grows as the number of agents
+    the probability that an agent detects a peer in a slot grows as the number of agents
     increases. This is because a new agent will not interrupt but help other agents to detect peers
     if it is in $transmit$ state in a time slot.
 \end{remark}
@@ -175,22 +178,24 @@ and exactly one peer is transmitting.
         \IF{the agent is in $listen$ state in the first sub-slot}
             \IF{reveive a message successfully}
                 \STATE Record the source ID and transmit a beacon;
-                \STATE $\omega_{t+1} := \frac{\omega_t}{2}$;
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$;
             \ELSIF{channel is idle}
-                \STATE $\omega_{t+1} := min\{2\cdot\omega_t, \zeta\}$;
+                \STATE Set $\omega_{t+1} := min\{2\cdot\omega_t, \zeta\}$;
+            \ELSE
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$; $\backslash\backslash$ the channel is busy
             \ENDIF
         \ELSE
-            \IF{detect energy}
+            \IF{detect beacon in this sub-slot}
                 \STATE Turn to the \emph{quiet} state : keep listening in all 
-                the rest time slots of this round;
+                the rest slots of this round;
             \ELSE
-                \STATE $\omega_{t+1} := \frac{\omega_t}{2}$;
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$;
             \ENDIF
         \ENDIF
         \STATE $t := (t + 1)$;
         \IF{$t == \hat{T}$}
             \IF{no peer is found in this round}
-                \STATE Turn to \textbf{Detecting Stage};
+                \STATE Turn to \textbf{Detecting Stage}; \label{backDS}
             \ELSE
                 \STATE $t := 0$; $\omega_t := \zeta$;
             \ENDIF
@@ -203,25 +208,31 @@ and exactly one peer is transmitting.
 
 The collision detection (CD) mechanism is incorporated in this stage 
 to increase of efficiency. This mechanism enables the listening agent 
-to notify its transmitting peers of the transmission outcomes, 
-and hence they take measures to reduce the collisions.
+to notify the transmitting peers of the transmission outcomes, 
+and thus they take measures to reduce the collisions if not successful.
 
-Each time slot is divided into two sub-slots and every 
-$\hat{T}$ complete time slots consists of a round.
-Agents execute transmission or reception in the first sub-slot, 
-and maintain the EncounterList and reply a beacon in the second sub-slot (if receive a message 
-successfully in the first sub-slot). The algorithm in detecting stage is formulated as Alg.~\ref{CA}.
+In this stage, every $\hat{T}$ slots consists of a round. Each 
+agent repeats the operations in Alg.~\ref{CA} round by round and 
+it turns to the connecting stage when it cannot find any peer in a complete round, 
+as the operation in Line~\ref{backDS}.
 
 As discussed in section~\ref{sectionmodel}, $\hat{T}$ is relatively short in 
 real world, thus the communication connectivity stays stable in a round. 
-However, due to the movements of agents, the communication connectivity
+However, due to the dynamic movements of agents, the communication connectivity
 may change from round to round, so all the parameters will be 
 initialized at the beginning of each round and adaptively adjusted later 
 according to the transmission outcome.
 
+Each time slot is divided into two sub-slots.
+Agents execute transmission or reception in the first sub-slot, 
+and in the second sub-slot take actions responding to the outcome of the previous sub-slot
+(success/fail to transmit/receive a message).
+% (if receive a message 
+% successfully in the first sub-slot). %The algorithm in detecting stage is formulated as Alg.~\ref{CA}.
+
 Since the number of the nearby peers is unknown to each agent, 
 the transmitting probability is initially set as $\zeta$, which is a pre-defined constant.
-In the first sub-slot of each time slot $t$, an agent transmit a message containing ID 
+In the first sub-slot of each slot $t$, an agent transmits a message containing ID 
 with probability $\omega_t$ and listen with probability $1 - \omega_t$. 
 
 In the second sub-slot: 
@@ -235,7 +246,7 @@ In the second sub-slot:
     \item if the channel is idle, this means there is a chance to 
     transmit successfully and it multiplies its transmitting 
     probability by a factor $2$ (no larger than $\zeta$).
-    \item if the agent detects collisions, it does nothing.
+    \item if the agent detects collisions, it halves its transmission probability.
     \end{itemize}
     \item[2)] The agent is in $transmit$ state in the first sub-slot:
     \begin{itemize}
