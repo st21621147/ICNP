@@ -4,52 +4,69 @@
 In this section, we prove that with a clique of $k$ agents,  
 {\pName} protocol guarantees each agent can record all
 the peers in $O(k)$ slots with high probability.
+Note that, $k$ is not known in the execution of the protocol but just for analysis
+in this section.
 Formally, this conclusion is derived from the following theorem.
 \begin{theorem}
     \label{bound}
-    Consider an encounter process of $k$ agents :
+    Consider an encounter process of $k$ agents~($k$ is a integer $k \geq 2)$ :
     \begin{itemize} 
-    \item[(1)] An agent in detecting stage  will switch to the connecting stage in $O(f(\theta))$
-    slots with high probability.
-    \item[(2)] When all the agents are in the connecting stage, each agent can 
-    successfully transmit once and turn to \emph{quiet} state in $O(k)$ slots with high probability.
+    \item[(1)] An agent in detecting stage  will switch to the connecting stage in $O(\theta^{-2})$
+    slots with high probability. Recall that $\theta$ is the pre-defined duty cycle and can be seen 
+    as a constant.
+    \item[(2)] When all the agents are in the connecting stage, all of them will
+    successfully transmit once and turn to the \emph{quiet} state 
+    in $O(k)$ slots with high probability.
     \end{itemize}
 \end{theorem}
 
-We prove the first conclusion in Theorem~\ref{bound} in Section~\ref{boundPC}, and the second
-conclusion in Section~\ref{boundSW}. 
-Finally, We explain how the {\pName} protocol deal with the dynamic movements
-of agents and record a duration encounter process in Section~\ref{dynamic}.
+We prove these two conclusions in Theorem~\ref{bound} in Section~\ref{boundPC}, and
+Section~\ref{boundSW} respectively. 
+Then, We explain how the {\pName} protocol deals with the dynamic movements
+of agents and records a duration encounter process in Section~\ref{dynamic}.
 
 \subsection{Time bound for detecting stage}
 \label{boundSW}
 
-When encouter happens, an agent in detecting stage will switch to connecting stage very soon. 
-We derive this conclusion form the following lemma.
-\begin{lemma}
-    An agent in detecting stage  will switch to the connecting stage in 
-    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})} \lceil \frac{9}{4\theta^{2}} \rceil$
-    slots with high probability.
+When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
+We derive this conclusion from the following two lemmas.
 
+\begin{lemma}
+    \label{RDS}
+    Consider any two agents $u_i$ and $u_j$ in detecting stage.
+    In each period $T_0$, they will turn on the radio in the same slot at least once.
 \end{lemma}
 \begin{IEEEproof}
+Assume the time drift between $u_i$ and $u_j$ is $\delta_{ij}$ (mod $T_0$).
+In the RDS constructed under $T_0$, there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv \delta_{ij}$ (mod $T_0$).
+Thus the $a_i^{th}$ slot in a period of $u_i$ is exactly the $a_j^{th}$ slot in a period of $a_j^{th}$ and both of them
+turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which completes the proof.
+\end{IEEEproof}
+\begin{lemma}
+    When an encounter happens, an agent in detecting stage will switch to the connecting stage in 
+    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})} \lceil \frac{9}{4\theta^{2}} \rceil$
+    slots with high probability.
+\end{lemma}
+\begin{IEEEproof}
+    First, consider $k$ agents in the detecting stage at the beginning. 
+    By Lemma~\ref{RDS}, any two peers can turn on their radios in the same 
+    slot at least once during every period of $T_0$. 
+    For a specific agent,
+    the probability it detects a peer in a period of $T_0$ is at least
+    $Pr \geq 1 - (\frac{1}{2} +\frac{1}{2^k})$.
+    Hence given a small enough constant $\eta$,  
+    it holds with high probability that an agent detects peer(s) in 
+    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})}$ periods, which is 
+    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
+    in total.    
+
+
     Consider two agents encounter at a time and one turn to the connecting stage first.
     Then the other will switch to the connecting stage very soon since the prior one in connecting
     stage increases its transmission probability (because there is no duty cycle in the 
     connecting stage) to let other peers detect it. 
 
-    Now we consider $k$ agents in the detecting stage at
-    the beginning. 
-    For any pair of agents ($u_i$, $u_j$),
-    we can find an ordered pair ($r_i$, $r_j$) from the constructed RDS
-    such that $r_i - r_j \equiv \delta_{ij}$ (mode $T_0$), where $\delta_{ij}$ is the time drift.
-    This indicates that any two peers can turn on their radios in the same 
-    slot at least once during every period of $T_0$. 
-    For a specific agent, the probability it detects a peer in a rounds of $T_0$ is at least
-    $Pr \geq 1 - (\frac{1}{2} +\frac{1}{2^k})$.
-    Hence it holds with high probability that an agent detects peer(s) in 
-    $\frac{\ln\eta}{\ln(\frac{1}{2}+\frac{1}{2^k})} \lceil \frac{9}{4\theta^{2}} \rceil$ slots,
-    where $\eta$ is small enough.    
+    Now we 
 \end{IEEEproof}
 
 
@@ -69,7 +86,8 @@ for a clique to turn to $|S_t| = 0$.
 In the following, we first show the
 upper bound of slots it takes from the beginning to $|S_t| \leq \log k$ in Lemma~\ref{fast}.
 Then we show the upper bound it takes to $|S_t| = 1$ in Lemma~\ref{slow}.
-Finally we present that it takes for all agents to successfully transmit~(i.e, $|S_t| = 0$.) in $O(k)$ in Lemma~\ref{one}. 
+Finally we present that it takes for all agents to successfully transmit~(i.e, $|S_t| = 0$.) in $O(k)$ 
+in Lemma~\ref{one}. 
 
 \begin{lemma}
     \label{fast}

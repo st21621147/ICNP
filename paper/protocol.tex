@@ -61,20 +61,30 @@ there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv d
 where $a_i,a_j \in D$.
 \end{definition}
 
-We now give an example to explain how RDS works to help synchronization, 
-as depicted in Figure~\ref{} (TBD).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3.5in]{figures/RDS}
+    \caption{A example of how RDS works to help synchronization. Consider a period
+    of $ten$ slots and the time drift between two agents $u_i$ and 
+    $u_j$ is $3$. There exists an ordered pair $(6,3)$ in the constructed RDS such that $6 - 3 \equiv 3$ (mod $10$). Thus 
+    they will determinately turn on the radio at the same slot in every period $T$, 
+    which is the $6^{th}$ slot in every period of $u_i$ and the $3^{th}$ slot in that of $u_j$ respectively.}
+    \label{exampleRDS}
+\end{figure}
+
+We now give an example to explain how RDS works to help synchronization.
 Suppose the duty cycle is set as $0.4$, i.e., there are $4$ active slots 
-in every $10$ time slots. it is easy to show that $R=\{1,2,3,6\}$ is a RDS
+in every $10$ time slots. It is easy to show that $R=\{1,2,3,6\}$ is a RDS
 under $Z_{10}$:
 \begin{align*}
     &2 - 1 = 1,\quad 3 - 1 = 2,\quad 6 - 3 = 3,\quad 6 - 2 = 4, \\
     &6 - 1 = 5,\quad {2 - 6 = 6}~{(mod~10)},\quad \dots,\quad \dots, 
 \end{align*}
 In every period of ten slots, for any $i = \{0,1,\dots,9\}$, if $i \in R$, then
-the agent turns on its radio in the $i^{th}$ slot in this round; otherwise it turns to the $sleep$ state.
-Consider any two agents in the detecting stage: if the time drift between their time rounds is $\delta$,
-there exists at least one ordered pair $(a_i,a_j)$ in $R$ such that $a_i - a_j \equiv \delta$ (mod $10$).
-That is, in each period $T_0$, any two agents at least once turn on the radio in the same time slot.
+the agent turns on its radio in the $i^{th}$ slot in this period; otherwise it turns off the 
+radio to the $sleep$ state. An example is depicted in Figure~\ref{exampleRDS}. 
+
+
 
 \begin{algorithm}[!h]
     \caption{RDS Construction Algorithm}
@@ -125,14 +135,14 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
     \STATE Invoke Alg.~\ref{RDS} to construct $R = \{r_0, r_1, ...,r_{\lceil 
     \frac{3\sqrt{T}}{2}  \rceil}\}$ under $Z_T$;
     \WHILE {$True$}
-            \IF{$(t + 1) \in R$}
+            \IF{$(t + 1) \in R$}  \label{On}
                 \STATE Generate a random float $\rho \in (0,1)$;
                 \IF{$\rho < \omega_0$}
                     \STATE Transmit a beacon;
                 \ELSE
                     \STATE Listening;
-                    \IF{Detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)} 
-                        \STATE Turn to \textbf{Connecting Stage};
+                    \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)} 
+                        \STATE Turn to the \textbf{connecting stage};
                     \ENDIF
                 \ENDIF
         \ELSE
@@ -145,7 +155,7 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
 
 Based on the RDS, we present the operations in the detecting stage as Alg.~\ref{DA}.
 An agent turns on its radio according to the RDS sequence and in each active slot it
-transmits a beacon with probability $\omega_0$ and listens with probability $1-\omega_0$.
+transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
 As discussed before, the aim of this stage is to detect nearby peer(s) as fast as possible 
 (if exists), and either successful transmission or detecting busy on the channel activates the agent
 to switch to the connecting stage. Here we fix the transmitting probability as $\omega_0 = \frac{1}{2}$ 
@@ -186,8 +196,7 @@ and exactly one peer is transmitting.
             \ENDIF
         \ELSE
             \IF{detect beacons in this sub-slot}
-                \STATE Turn to the \emph{quiet} state : keep listening in all 
-                the rest slots of this round;
+                \STATE $\omega_{t+1} := 0$;
             \ELSE
                 \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$;
             \ENDIF
@@ -195,7 +204,7 @@ and exactly one peer is transmitting.
         \STATE $t := (t + 1)$;
         \IF{$t == \hat{T}$}
             \IF{no peer is found in this round}
-                \STATE Turn to \textbf{Detecting Stage}; \label{backDS}
+                \STATE Turn to the \textbf{detecting stage}; \label{backDS}
             \ELSE
                 \STATE $t := 0$; $\omega_t := \zeta$;
             \ENDIF
@@ -233,7 +242,7 @@ and in the second sub-slot take actions responding to the outcome of the previou
 Since the number of the nearby peers is unknown to each agent, 
 the transmitting probability is initially set as $\zeta$, which is a pre-defined constant.
 In the first sub-slot of each slot $t$, an agent transmits a message containing ID 
-with probability $\omega_t$ and listen with probability $1 - \omega_t$. 
+with probability $\omega_t$ and listen with probability $(1 - \omega_t)$. 
 
 In the second sub-slot: 
 \begin{itemize}
@@ -245,7 +254,7 @@ In the second sub-slot:
     on the channel in the second sub-slot; 
     \item if the channel is idle, this means there is a chance to 
     transmit successfully and it multiplies its transmitting 
-    probability by a factor $(1+\epsilon)$ (no larger than $\zeta$).
+    probability by a factor $(1+\epsilon)$ (no larger than the pre-defined constant $\zeta$).
     \item if the agent detects collisions, it divides its transmission 
     probability by a factor ${(1+\epsilon)}$. 
     \end{itemize}
@@ -253,7 +262,7 @@ In the second sub-slot:
     \begin{itemize}
     \item if the agent detects beacons in this sub-slot,
     this means its previous message has been successfully received by its nearby
-    peers, and it keeps listening in all the rest time slots of this round,
+    peers, and it keeps listening in all the rest first sub-slots of this round,
     which is called \emph{quiet} state.
     \item if the agent detects nothing in this sub-slot, it means its previous message
     failed to propagate due to simultaneous transmissions. Thus it divides its transmission 
