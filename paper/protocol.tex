@@ -135,18 +135,20 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
     \STATE Invoke Alg.~\ref{RDS} to construct $R = \{r_0, r_1, ...,r_{\lceil 
     \frac{3\sqrt{T}}{2}  \rceil}\}$ under $Z_T$;
     \WHILE {$True$}
-            \IF{$(t + 1) \in R$}  \label{On}
-                \STATE Generate a random float $\rho \in (0,1)$;
-                \IF{$\rho < \omega_0$}
-                    \STATE Transmit a beacon;
-                \ELSE
-                    \STATE Listening;
-                    \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)} 
-                        \STATE Turn to the \textbf{connecting stage};
-                    \ENDIF
+        \IF{$(t + 1) \in R$}  \label{On}
+            \STATE \textbf{\emph{In the first sub-slot:}}
+            \STATE Transmit a beacon with probability $\omega_0$
+            and listen with probability $1-\omega_0$;
+            \STATE \textbf{\emph{In the second sub-slot:}}
+            \IF{the agent is in $listen$ state in the first sub-slot}
+                \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~the~first~sub-slot}
+                    \STATE Transmit a beacon and turn to the \textbf{connecting stage};
                 \ENDIF
+            \ELSIF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~this~sub-slot}
+                \STATE Turn to the \textbf{connecting stage};
+            \ENDIF
         \ELSE
-                \STATE $Sleep$;
+                \STATE $Sleep$ in the whole slot;
         \ENDIF
         \STATE $t := (t + 1) \% T_0$;
     \ENDWHILE
@@ -154,19 +156,36 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
 \end{algorithm}
 
 Based on the RDS, we present the operations in the detecting stage as Alg.~\ref{DA}.
-An agent turns on its radio according to the RDS sequence and in each active slot it
-transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
+Each time slot is divided into two sub-slots.
+When an agent turns on its radio according to the RDS sequence,
+in the first sub-slot
+it transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
+In the second sub-slot: 
+\begin{itemize}
+    \item[1)] The agent is in $listen$ state in the first sub-slot:
+    \begin{itemize}
+    \item if the agent detects a beacon (or beacons) in the first sub-slot, it 
+    transmits a beacon (a bit is OK) as an acknowledgement 
+    on the channel in the second sub-slot and turn to the 
+    connecting stage; otherwise it does nothing. 
+    \end{itemize}
+    \item[2)] The agent is in $transmit$ state in the first sub-slot:
+    \begin{itemize}
+    \item if the agent detects a beacon (or beacons) in this sub-slot,
+    it turns to the connecting stage; otherwise it does nothing.
+    \end{itemize}
+\end{itemize}
+
 As discussed before, the aim of this stage is to detect nearby peer(s) as fast as possible 
 (if exists), and either successful transmission or detecting busy on the channel activates the agent
-to switch to the connecting stage. Here we fix the transmitting probability as $\omega_0 = \frac{1}{2}$ 
-since it is the optimal probability for two-agent encounter, the most common case
-in the {\sysname} system. 
-\begin{remark}
-    Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
-    the probability that an agent detects a peer in a slot grows as the number of agents
-    increases. This is because a new agent will not interrupt but help other agents to detect peers
-    if it is in $transmit$ state in a time slot.
-\end{remark}
+to switch to the connecting stage. Hence we fix the transmitting probability as $\omega_0 = \frac{1}{2}$. 
+
+% \begin{remark}
+%     Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
+%     the probability that an agent detects a peer in a slot grows as the number of agents
+%     increases. This is because a new agent will not interrupt but help other agents to detect peers
+%     if it is in $transmit$ state in a time slot.
+% \end{remark}
 
 \subsection{Connecting stage}
 
@@ -241,9 +260,9 @@ and in the second sub-slot take actions responding to the outcome of the previou
 
 Since the number of the nearby peers is unknown to each agent, 
 the transmitting probability is initially set as $\zeta$, which is a pre-defined constant.
+
 In the first sub-slot of each slot $t$, an agent transmits a message containing ID 
 with probability $\omega_t$ and listen with probability $(1 - \omega_t)$. 
-
 In the second sub-slot: 
 \begin{itemize}
     \item[1)] The agent is in $listen$ state in the first sub-slot:
@@ -251,7 +270,7 @@ In the second sub-slot:
     \item if the agent receives a message successfully, it 
     decodes and records the source ID in the message, and
     transmits a beacon (a bit is OK) as an acknowledgement 
-    on the channel in the second sub-slot; 
+    on the channel in the second sub-slot. 
     \item if the channel is idle, this means there is a chance to 
     transmit successfully and it multiplies its transmitting 
     probability by a factor $(1+\epsilon)$ (no larger than the pre-defined constant $\zeta$).
