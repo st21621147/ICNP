@@ -178,18 +178,18 @@ and exactly one peer is transmitting.
         \IF{the agent is in $listen$ state in the first sub-slot}
             \IF{reveive a message successfully}
                 \STATE Record the source ID and transmit a beacon;
-                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$;
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$;
             \ELSIF{channel is idle}
-                \STATE Set $\omega_{t+1} := min\{2\cdot\omega_t, \zeta\}$;
+                \STATE Set $\omega_{t+1} := min\{(1+\epsilon)\cdot\omega_t, \zeta\}$;
             \ELSE
-                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$; $\backslash\backslash$ the channel is busy
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$; $\backslash\backslash$ the channel is busy
             \ENDIF
         \ELSE
-            \IF{detect beacon in this sub-slot}
+            \IF{detect beacons in this sub-slot}
                 \STATE Turn to the \emph{quiet} state : keep listening in all 
                 the rest slots of this round;
             \ELSE
-                \STATE Set $\omega_{t+1} := \frac{\omega_t}{2}$;
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$;
             \ENDIF
         \ENDIF
         \STATE $t := (t + 1)$;
@@ -245,21 +245,24 @@ In the second sub-slot:
     on the channel in the second sub-slot; 
     \item if the channel is idle, this means there is a chance to 
     transmit successfully and it multiplies its transmitting 
-    probability by a factor $2$ (no larger than $\zeta$).
-    \item if the agent detects collisions, it halves its transmission probability.
+    probability by a factor $(1+\epsilon)$ (no larger than $\zeta$).
+    \item if the agent detects collisions, it divides its transmission 
+    probability by a factor ${(1+\epsilon)}$. 
     \end{itemize}
     \item[2)] The agent is in $transmit$ state in the first sub-slot:
     \begin{itemize}
-    \item if the agent detects energy (beacon or collisions) in this sub-slot,
+    \item if the agent detects beacons in this sub-slot,
     this means its previous message has been successfully received by its nearby
     peers, and it keeps listening in all the rest time slots of this round,
     which is called \emph{quiet} state.
-    \item if the agent detects nothing in this sub-slot, it means ts previous message
-    failed to propagate due to simultaneous transmitting. Thus it divides its transmitting 
-    probability by a factor $2$. 
+    \item if the agent detects nothing in this sub-slot, it means its previous message
+    failed to propagate due to simultaneous transmissions. Thus it divides its transmission 
+    probability by a factor ${(1+\epsilon)}$. 
     \end{itemize}
 \end{itemize}
 
+Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmission adaptively.
+For simplify, we set $(1+\epsilon) := 2$ for analysis in the next Section.
 In the end of a complete round, if there is no peer detected in this whole round, 
 which indicates the encounter process is finished, the agent turns to the detecting stage .
 
