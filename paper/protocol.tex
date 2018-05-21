@@ -4,8 +4,7 @@
 In this section, we present our Adaptive Wildlife Encounter~(AWE) protocol.
 The pseudo-code of the protocol is given in Algorithm~\ref{DA} and Algorithm~\ref{CA}.
 
-{\pName} consists of two stages: detecting stage and 
-connecting stage. 
+{\pName} consists of two stages: detecting stage and connecting stage. 
 \begin{itemize}
     \item \textbf{Stage 1: detecting stage.} In this stage, an agent attempts to
     detect whether there are nearby peers, regardless of who they are. 
@@ -52,7 +51,7 @@ we introduce the technique of Relax Difference Set (RDS)~\cite{luk1997two}.
 We use the RDS technique to guarantee that every encounter pair 
 of agents turn on the radio in the same slot at least once in each round $T_0$.
 
-RDS is an efficient tool to construct cyclic quorum systems. 
+RDS is an efficient tool to construct cyclic quorum systems~\cite{Peleg1995The}. 
 The definition is:
 \begin{definition}
 A set $R=\{a_1,a_2,...,a_k\} \subseteq Z_T$ (the set of all non-negative integers less than $T$)

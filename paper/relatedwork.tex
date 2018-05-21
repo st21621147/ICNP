@@ -1,6 +1,7 @@
 \section{Related Work}
 \label{sec:related-work}
 
+\subsection{Encounter-registration system}
 The first encounter-registration system has been developed by a company called Sirtrack 
 over a decade ago~\cite{Prangle2006NewRadiocolars}. The tags
 were placed on collars that were attached to wild mammals. The tags are fairly heavy, weighing 45--450g, depending on the
@@ -33,6 +34,38 @@ bats~\cite{Ripperger2016ProximitySensing,dressler2016bats}. These tags include a
 enables nano-power listening without maintenance of inter-tag synchronized clocks. These tags  
 do not appear to have been commercialized or widely-used otherwise.
 
-SHEN TONG SHOULD ADD PROTOCOL-RELATED WORK.
+\subsection{Protocol for encounter registration}
 
+Although there has been no analysis of the protocols studying on the encounter registration problem,
+several similar problems are well-studied in the wireless network literature, 
+such as  
+neighbor discovery problem~\cite{Bakht2012Searchlight, Sun2014Hello}, 
+minimum dominating set problem~\cite{Scheideler2008An},
+and information exchange problem~\cite{Capetanakis1979Tree,Yu2017Uniform}.
+
+Minimum dominating set problem~\cite{Scheideler2008An} is studied to 
+deal with interference challenges for the wireless multi-hop networks.
+This problem focus on the communication models, such as unit disk graph model~\cite{Lebhar2009Unit} (UDG),
+graph-based model~\cite{De2007A} and Signal to Interference plus Noise Ratio model~\cite{Lee2007Signal} (SINR).
+Neighbor discovery problem is well studied in the wireless sensor 
+networks. Many algorithms~\cite{Bakht2012Searchlight, Sun2014Hello} 
+are designed for two nodes to discover each other and 
+are applied directly to the multi-node scenario.
+Information exchange problem~\cite{Capetanakis1979Tree,Yu2017Uniform} is 
+studied on the information propagation in a single-hop network. 
+In the network, there are active nodes with packets to transmit 
+and inactive nodes waiting to receive.
+A common solution to these problems is to control the transmission probability of the node in the 
+network, making it optimal to transmit successfully.
+Some deterministic methods, such as quorum system~\cite{Peleg1995The} and prime number, are also 
+adopted to help synchronization in the protocol design.
+
+The major difference between the problems above and the encounter registration problem
+in this paper is the dynamics of the wild animals. It makes the problem complicated that whether an encounter is happening at the moment is unknown.
+Besides the encounter behavior varies from individual to individual. Some animals are eager to 
+keep company with peers while others stay alone most of the time.
+Since animals are attached with energy-restrained
+tags, the energy-efficiency should also be taken into consideration.
+All these factors make the problem challenging.
+  
 
