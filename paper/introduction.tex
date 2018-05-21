@@ -23,6 +23,28 @@ be very small, because deployment does not require much infrastructure in the fi
 encounters are key aspects of many significant events in the life of animals: mating, predation, transmission of infectious
 diseases, and so on. We comment on some of these applications in Section~\ref{sec:related-work}.
 
+Encounter-registration systems pose challenging protocol-ralated problems. One problem is to minimize
+the power used for listening to other tags. All of the systems developed so far have used low-power integrated
+UHF transceivers, and the power consumed by these while receiving is comparable to the power that they use
+to transmit. The dominant strategy to address this issue appears to be duty-cycling the receiver, so that it is
+off most of the time. Synchronizing the timing of the activity periods of all tags can minimize total receive energy
+while maximizing that transmissions will be received. If tags do not synchronize their activity periods, many transmissions
+at close proximity may go unnoticed; this is not an unreasonable solution if encounters are long. Another emerging approach
+to the receive-power problem is based on so-called {\em wake-up receivers}, specialized nano-power sub-receivers whose only
+job is to wake up the main receiver when a strong packet is received. These have not been used in Ecology research so we
+exclude them from most of the discussion; we do comment on them in Section~\ref{sec:related-work}.
+
+The other protocol-related problem is interference. If many tags transmit simultaneously, receiving tags may fail
+to reconstruct valid packets. Paradoxically, highly-efficient systems with good time synchronization and short activity
+periods suffer more from this problem than less efficient systems in which the clocks of tags are not synchronized tightly
+enough to transmit simultaneously. This is not a theoretical problem; many species of animals, including many species of
+birds and bats, roost together, so encounters of tens or hundreds of individuals are not necessarily rare.
+
+This paper proposes effective protocols for encounter registration, addressing these two problems systematically and
+methodically. 
+
+HERE WE NEED SHEN TONG TO ADD A SUMMARY OF THE TECHNICAL RESULTS (WHAT WE HAVE BEEN ABLE TO SHOW).
+
 
 
  
