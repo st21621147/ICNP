@@ -1,14 +1,14 @@
 \begin{abstract}
-    Encounter is a well-studied interaction between wild animals.
+    Encounter is a well-studied interaction of wild animals.
     Several real Encounter-registration systems have been implemented
     to help record the encounter process. In these systems, wild animals
     are attached with energy-restricted radio devices called tags, to transmit packets periodically
     and record the encounter process with others.
     However, these is no effective protocol for the encounter registration due to a paradox 
     between minimizing the power consumption of tags
-    and reducing the encounter latency. Our insight is that it is reasonable a tag 
-    increases the working frequency of its radio when encounter happens，and otherwise keeps
-    the radio in a low-power mode. The key is to design mechanism
+    and reducing the encounter latency. Our insight is that it is reasonable for a tag to
+    increase the working frequency of its radio when encounter happens，and otherwise keeps
+    the radio in a low-power mode. The key is to design a mechanism
     to identify the existence of encounter in real-time. 
 
 
@@ -17,7 +17,7 @@
     high probability  accomplishes the encounter registration 
     in $O(k)$ slots time, assuming $k$ is the number of encounter tags.
     Our protocol consists of two process: detect other tags with low energy consumption; 
-    and make connection with the detected tags to identify each other and record the ID. 
+    and make connections with the detected tags to record each other ID. 
     We analyze the performance of this protocol under a formulated radio model and carry out a number of
     experiments to validate this radio model.
     To the best of our knowledge, this is the first practical protocol for a real 

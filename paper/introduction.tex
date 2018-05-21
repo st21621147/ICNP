@@ -40,10 +40,13 @@ periods suffer more from this problem than less efficient systems in which the c
 enough to transmit simultaneously. This is not a theoretical problem; many species of animals, including many species of
 birds and bats, roost together, so encounters of tens or hundreds of individuals are not necessarily rare.
 
-Our insight is that, it is reasonable for a tag to
+Our fundamental observation is that it is a waste of energy if an animal is not encountering with others
+while still keeps the tag working frequently.
+It is reasonable for a tag to
 increase the working frequency of its radio when encounter happens; otherwise it keeps
 the radio in a low-power mode. The key is to design mechanism
 to identify the existence of encounter in real-time. 
+
 
 
 In this paper, we propose an effective protocol for encounter registration, 
@@ -58,21 +61,17 @@ a tag adaptively adjusts its transmission probability: it increases the probabil
 the channel is detected idle and reduces the probability when interference is detected.  
 
 
-We present concrete analysis of our protocol under our radio communication model.
-give an upper bound that 
-We carried out a number of experiments in order to validate the radio model and present
+We present concrete analysis of the protocol under our radio model
+and carry out a number of experiments to validate this model.
+We prove that our protocol accomplishes the encounter registration in $O(k)$ slots time.
+
 
 %% Remaining structure
-The remainder of the paper is organized as follows. The next section
-highlights the related works .
-Section~\ref{sectionmodel} presents
-the system model and basic definitions.
+The remainder of the paper is organized as follows. 
+The next section highlights the related works.
+Section~\ref{sectionmodel} presents the system model and basic definitions.
 We present the concrete protocol description
 in Section~\ref{sectionprotocol}. We  
 analyze the performance of our protocol in Section~\ref{sectionanalysis}. 
 We validate the radio model by real experiments in Section~\ref{sectionsimulation}, 
-and we conclude the paper in Section~\ref{sectionconclusion}.
-
-
- 
-
+and the paper is concluded in Section~\ref{sectionconclusion}.
