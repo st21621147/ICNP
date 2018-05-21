@@ -1,8 +1,8 @@
-\section{Analysis of the {\pName} Protocol}
+\section{Analysis of the Encounter Protocol}
 \label{sectionanalysis}
 
 In this section, we prove that with a clique of $k$ agents,  
-{\pName} protocol guarantees each agent can record all
+{\pName} guarantees each agent can record all
 the peers in $O(k)$ slots with high probability.
 Note that, $k$ is not known in the execution of the protocol but just for analysis
 in this section.
@@ -31,7 +31,7 @@ duration of $2z\hat{T}t_0$. Recall that $2t_0$ is the real time
 of a slot and $\hat{T}$ is the number of slots of a round in 
 the connecting stage, which is 
 sufficiently large to satisfy the bound 
-of the {\pName} protocol while still short enough relative to the 
+of {\pName}  while still short enough relative to the 
 time required for an agent to move a short distance. 
 
 \subsection{Time bound for detecting stage}
@@ -343,7 +343,7 @@ Finally we need to prove the following lemma.
 \end{IEEEproof}
 
 According to the Lemma~\ref{fast}, \ref{slow} and \ref{one},
-we get the upper bound $O(k)$ of the {\pName} protocol with respect to
+we get the upper bound $O(k)$ of {\pName} with respect to
 the clique size $k$. Note that, since the round of each agent may not be 
 synchronized, {\pName} requires an overlap of at least $T_4$ time 
 slots in a complete round between each agent.

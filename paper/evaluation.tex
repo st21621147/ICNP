@@ -1,11 +1,11 @@
 \section{Evaluation}
 \label{sectionsimulation}
+In this section, we carried out a number of experiments in order to validate the radio model. 
 
-We carried out a number of experiments in order to validate the radio model. 
 All the experiments were carried using LAUNCHXL-CC1350-4 evaluation boards with CC1350 RF microcontrollers 
 by Texas Instruments. We used a quiet frequency in the 434~MHz band, for which the boards are designed,
 and we used the built-in helix antenna printed on the boards. This antenna is fairly inefficient, resulting
-in about 4x to 8x degradation in communication range~\cite{LAUNCHXL-CC1350-4}. We used it because the shorter 
+in about 4x to 8x degradation in communication range. We used it because the shorter 
 ranges make testing easier
 and also because antennas on small wildlife tags also tend to be inefficient due to the tiny ground plane.
 The chips that we tested are widely-used in miniature wildlife tags, and they essentially represent a modern
@@ -14,7 +14,7 @@ version of the chips that were used on the original Encounternet tags.
 
 In all tests we configured the radios for GFSK modulation, 500~kb/s, $\pm 250$~kHz deviation, 1243~kHz receive bandwidth,
 and 10~dBm transmit power. We used a Windows program called SmartRF Studio version~7 to drive the boards during
-the tests and to log received packets. In all tests one board transmitted one 1.87~packets per second (intevals of
+the tests and to log received packets. In all tests one board transmitted one 1.87~packets per second (intervals of
 500~ms between packets). Packets consisted of a 4-byte preamble, 4-byte sync workd, a length byte, 30-byte payload 
 that includes a sequence number, and a 2-byte checksum. The fast transmission rate reduces power consumption (per byte and
 per packet) and leads to short communication ranges, which are consistent with the goal of registering close encounters.
@@ -46,7 +46,7 @@ maintained each test position for at least 5 minutes.
 The receiver board was also placed about 1.4~m above ground. In all the tests shown in graphs the transmit
 and receive antennas were pointed at each other. We also performed a few tests with the receive antenna rotated 90~degrees;
 RSSI values were about 1--2~dB lower but the overall results were similar; this is consistent with the characterization
-of the antenna, which indicates that it is fairly onmidirectional~\cite{LAUNCHXL-CC1350-4}.
+of the antenna, which indicates that it is fairly omnidirectional.
 The main results are shown in Figure~\ref{fig:rssiHistograms}.
 At each distance we measured the fraction of correctly-received packets and the RSSI of each packet. At the four
 distances reported in the figure, virtually all transmitted packets were received correctly. We can see a clear

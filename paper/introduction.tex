@@ -1,19 +1,24 @@
 \section{Introduction}
 
-Collecting detailed information about wild animals remains a significant technical challenge that
+Collecting detailed information about wild animals~\cite{Prangle2006NewRadiocolars,Rutz2012AutomatedMapping} 
+remains a significant technical challenge that
 limits the ability of Ecologists to study them, the interactions between them, and the interactions 
 between wild animals and their environment. One tools that has emerged a little over a decade ago
-and has been gaining significance is {\em encounter detection and logging}.
+and has been gaining significance is 
+{\em encounter detection and logging}~\cite{Tentelier2016FishNetwork,
+Bohm2009WildlifeLivestock,Ripperger2016ProximitySensing}.
 
-Encounter detection systems consist of radio devices called {\em tags} that are attached to wild
-animals (and sometimes also to fixed positions and to livestock). The radios transmit identification
+Encounter detection systems~\cite{Levin2015Performance,Menhill2012NovelTelemetry,dressler2016bats} 
+consist of radio devices called {\em tags} that are attached to wild
+animals (and sometimes also to fixed positions and to livestock), as depicted in Fig.~\ref{tags}. 
+The radios transmit identification
 packets periodically, usually once every few seconds. The radios also listen to such packets, not
 necessarily continuously, and record data about received packets in persistent memory on the tag. The
 radios are typically configured for short-range communication by using low transmit power and by 
 using high data-rates (both limit the signal-to-noise ratio at the receiver). Because the radios
 are configured for short-range communication, receiving a packet implies that the transmitting tag is
 in close proximity to the receiving tag. Recent systems record with each packet a received signal strentgh
-indication (RSSI), which helps to estimate the distance between the transmitter and receiver.
+indication (RSSI)~\cite{Daiya2011Experimental}, which helps to estimate the distance between the transmitter and receiver.
 This is the main goal of these systems: to log close-proximity
 events between two or more animals. The logs are downloaded either by physically retrieving the tags,
 or remote download to base-stations placed in locations that the animals are known to frequent.
@@ -23,10 +28,18 @@ be very small, because deployment does not require much infrastructure in the fi
 encounters are key aspects of many significant events in the life of animals: mating, predation, transmission of infectious
 diseases, and so on. We comment on some of these applications in Section~\ref{sec:related-work}.
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=3in]{figures/tag}
+    \caption{Encounternet tags}
+    \label{tags}
+\end{figure}
+
 Encounter-registration systems pose challenging protocol-ralated problems. One problem is to minimize
 the power used for listening to other tags. All of the systems developed so far have used low-power integrated
 UHF transceivers, and the power consumed by these while receiving is comparable to the power that they use
-to transmit. The dominant strategy to address this issue appears to be duty-cycling the receiver, so that it is
+to transmit. The dominant strategy to address this issue appears to be duty-cycling the 
+receiver~\cite{Zhang2017Performance}, so that it is
 off most of the time. Synchronizing the timing of the activity periods of all tags can minimize total receive energy
 while maximizing that transmissions will be received. If tags do not synchronize their activity periods, many transmissions
 at close proximity may go unnoticed; this is not an unreasonable solution if encounters are long. Another emerging approach
@@ -34,11 +47,16 @@ to the receive-power problem is based on so-called {\em wake-up receivers}, spec
 job is to wake up the main receiver when a strong packet is received. These have not been used in Ecology research so we
 exclude them from most of the discussion; we do comment on them in Section~\ref{sec:related-work}.
 
-The other protocol-related problem is interference. If many tags transmit simultaneously, receiving tags may fail
-to reconstruct valid packets. Paradoxically, highly-efficient systems with good time synchronization and short activity
-periods suffer more from this problem than less efficient systems in which the clocks of tags are not synchronized tightly
-enough to transmit simultaneously. This is not a theoretical problem; many species of animals, including many species of
-birds and bats, roost together, so encounters of tens or hundreds of individuals are not necessarily rare.
+The other protocol-related problem is interference. 
+If many tags transmit simultaneously, receiving tags may fail
+to reconstruct valid packets. Paradoxically, highly-efficient 
+systems with good time synchronization and short activity
+periods suffer more from this problem than less efficient systems 
+in which the clocks of tags are not synchronized tightly
+enough to transmit simultaneously. This is not a theoretical problem; 
+many species of animals, including many species of
+birds and bats, roost together, so encounters of tens or hundreds 
+of individuals are not necessarily rare.
 
 Our fundamental observation is that it is a waste of 
 energy if an animal is not encountering with others

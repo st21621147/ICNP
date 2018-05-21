@@ -1,10 +1,10 @@
 \section{Adaptive Wildlife Encounter protocol}
 \label{sectionprotocol}
 
-In this section, we present our Adaptive Wildlife Encounter~(AWE) protocol.
+In this section, we present our encounter registration protocol.
 The pseudo-code of the protocol is given in Algorithm~\ref{DA} and Algorithm~\ref{CA}.
 
-{\pName} consists of two stages: detecting stage and connecting stage. 
+The protocol consists of two stages: detecting stage and connecting stage. 
 \begin{itemize}
     \item \textbf{Stage 1: detecting stage.} In this stage, an agent attempts to
     detect whether there are nearby peers, regardless of who they are. 
@@ -26,7 +26,7 @@ when the encounter process is determined to be finished in the connecting stage,
 the agent turns back to the detecting stage.
 
 \begin{remark}
-    In the {\pName} protocol, there is no need to synchronize the stage between agents and
+    In {\pName}, there is no need to synchronize the stage between agents and
     {\pName} still works when encounter peers are in different stage, e.g., an agent in detecting 
     stage bursts into a stable clique in connecting stage. 
     The proof of correctness will be presented 
