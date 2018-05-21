@@ -68,13 +68,13 @@ where $a_i,a_j \in D$.
     of $ten$ slots and the time drift between two agents $u_i$ and 
     $u_j$ is $3$. There exists an ordered pair $(6,3)$ in the constructed RDS such that $6 - 3 \equiv 3$ (mod $10$). Thus 
     they will determinately turn on the radio at the same slot in every period $T$, 
-    which is the $6^{th}$ slot in every period of $u_i$ and the $3^{th}$ slot in that of $u_j$ respectively.}
+    which is the $6^{th}$ slot in a period of $u_i$ and the $3^{th}$ slot in that of $u_j$ respectively.}
     \label{exampleRDS}
 \end{figure}
 
 We now give an example to explain how RDS works to help synchronization.
 Suppose the duty cycle is set as $0.4$, i.e., there are $4$ active slots 
-in every $10$ time slots. It is easy to show that $R=\{1,2,3,6\}$ is a RDS
+in every $10$ slots. It is easy to show that $R=\{1,2,3,6\}$ is a RDS
 under $Z_{10}$:
 \begin{align*}
     &2 - 1 = 1,\quad 3 - 1 = 2,\quad 6 - 3 = 3,\quad 6 - 2 = 4, \\
@@ -90,8 +90,8 @@ radio to the $sleep$ state. An example is depicted in Figure~\ref{exampleRDS}.
     \caption{RDS Construction Algorithm}
     \label{RDS}
     \begin{algorithmic}[1]
-    \STATE $R :=\emptyset$; $\lambda :=\lceil \sqrt{T}  \rceil$,
-    $\mu :=\lceil \frac{\lceil \sqrt{T} \rceil}{2} \rceil$;\label{RDSline1}
+    \STATE $R :=\emptyset$; $\lambda :=\lceil \sqrt{N}  \rceil$,
+    $\mu :=\lceil \frac{\lceil \sqrt{N} \rceil}{2} \rceil$;\label{RDSline1}
     \FOR{$i = 1 :\lambda$}
         \STATE $R :=R \cup i$; \label{RDSline2}
     \ENDFOR
@@ -101,26 +101,26 @@ radio to the $sleep$ state. An example is depicted in Figure~\ref{exampleRDS}.
     \end{algorithmic}
 \end{algorithm}
 
-It has been proved that any RDS must have cardinality $|R| \geq \sqrt{T}$\cite{luk1997two}.
+It has been proved that any RDS must have cardinality $|R| \geq \sqrt{N}$\cite{luk1997two}.
 We present a linear algorithm to construct a RDS with 
-cardinality $\lceil \frac{3\sqrt{T}}{2}  \rceil$ under $Z_T$ in Alg. \ref{RDS}.
+cardinality $\lceil \frac{3\sqrt{T_0}}{2}  \rceil$ under $Z_{T_0}$ in Alg. \ref{RDS}.
 
 We show the correctness of the construction formally.
 %The correctness proof of the construction
 \begin{lemma}
 \label{RDS1}
 Set $R = \{r_0, r_1, ..., r_{\lambda + \mu - 1}\}$ constructed in Alg. \ref{RDS} is a RDS,
-where $|R| = \lambda + \mu = \lceil \sqrt{T}  \rceil + \lceil \frac{\lceil \sqrt{T} \rceil}{2} \rceil
-\approx \lceil \frac{3\sqrt{T}}{2}  \rceil$.
+where $|R| = \lambda + \mu = \lceil \sqrt{T_0}  \rceil + \lceil \frac{\lceil \sqrt{T_0} \rceil}{2} \rceil
+\approx \lceil \frac{3\sqrt{T_0}}{2}  \rceil$.
 \end{lemma}
 \begin{IEEEproof}
-Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $T$),
+Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $T_0$),
 an opposing pair $(a_j,a_i)$ exists such that
-$a_j - a_i \equiv (T-d)$ (mod $T$). Thus we only need to find
-at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor T/2 \rfloor]$.
+$a_j - a_i \equiv (T_0-d)$ (mod $T_0$). Thus we only need to find
+at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor T_0/2 \rfloor]$.
 
 In the construction, $\lambda$ in Line \ref{RDSline1} is the smallest integer satisfying
-$\lambda^2 \geq T$. Every $d$ in range $[1, \lfloor T/2 \rfloor]$
+$\lambda^2 \geq T_0$. Every $d$ in range $[1, \lfloor T_0/2 \rfloor]$
 can be represented as: $ d = 1 + j \times \lambda - i$, where $1 \leq j \leq \mu,
 1 \leq i \leq \lambda$. Thus, there exists $a_j = 1 + j \times \lambda$
 from Line. \ref{RDSline2} and $a_i = i$ from Line. \ref{RDSline3}
@@ -133,7 +133,7 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
     \begin{algorithmic}[1]
     \STATE $T_0 := \lceil \frac{9}{4\theta^{2}} \rceil$; $\omega_0 :=\frac{1}{2}$; $t := 0$;
     \STATE Invoke Alg.~\ref{RDS} to construct $R = \{r_0, r_1, ...,r_{\lceil 
-    \frac{3\sqrt{T}}{2}  \rceil}\}$ under $Z_T$;
+    \frac{3\sqrt{T_0}}{2}  \rceil}\}$ under $Z_{T_0}$;
     \WHILE {$True$}
         \IF{$(t + 1) \in R$}  \label{On}
             \STATE \textbf{\emph{In the first sub-slot:}}
@@ -156,10 +156,10 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
 \end{algorithm}
 
 Based on the RDS, we present the operations in the detecting stage as Alg.~\ref{DA}.
-Each time slot is divided into two sub-slots.
-When an agent turns on its radio according to the RDS sequence,
-in the first sub-slot
-it transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
+Each slot is divided into two sub-slots.
+Agents turn on and off the radio according to the RDS sequence,
+Consider a slot the radio is on. In the first sub-slot
+an agent transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
 In the second sub-slot: 
 \begin{itemize}
     \item[1)] The agent is in $listen$ state in the first sub-slot:
@@ -184,7 +184,7 @@ to switch to the connecting stage. Hence we fix the transmitting probability as 
 %     Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
 %     the probability that an agent detects a peer in a slot grows as the number of agents
 %     increases. This is because a new agent will not interrupt but help other agents to detect peers
-%     if it is in $transmit$ state in a time slot.
+%     if it is in $transmit$ state in a slot.
 % \end{remark}
 
 \subsection{Connecting stage}
@@ -251,7 +251,7 @@ may change from round to round, so all the parameters will be
 initialized at the beginning of each round and adaptively adjusted later 
 according to the transmission outcome.
 
-Each time slot is divided into two sub-slots.
+Each slot is divided into two sub-slots.
 Agents execute transmission or reception in the first sub-slot, 
 and in the second sub-slot take actions responding to the outcome of the previous sub-slot
 (success/fail to transmit/receive a message).
@@ -289,8 +289,8 @@ In the second sub-slot:
     \end{itemize}
 \end{itemize}
 
-Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmission adaptively.
-For simplify, we set $(1+\epsilon) := 2$ for analysis in the next Section.
+Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmission probability adaptively.
+For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
 In the end of a complete round, if there is no peer detected in this whole round, 
 which indicates the encounter process is finished, the agent turns to the detecting stage .
 
@@ -299,6 +299,6 @@ which indicates the encounter process is finished, the agent turns to the detect
 
 
 
-% The key idea is that, since a round of time slots is very short 
+% The key idea is that, since a round of slots is very short 
 % in real time, the nearby agents can be seen as a clique, i.e., 
 % every two nodes are neighbors.  
