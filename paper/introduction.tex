@@ -40,11 +40,38 @@ periods suffer more from this problem than less efficient systems in which the c
 enough to transmit simultaneously. This is not a theoretical problem; many species of animals, including many species of
 birds and bats, roost together, so encounters of tens or hundreds of individuals are not necessarily rare.
 
-This paper proposes effective protocols for encounter registration, addressing these two problems systematically and
-methodically. 
+Our insight is that, it is reasonable for a tag to
+increase the working frequency of its radio when encounter happens; otherwise it keeps
+the radio in a low-power mode. The key is to design mechanism
+to identify the existence of encounter in real-time. 
 
-HERE WE NEED SHEN TONG TO ADD A SUMMARY OF THE TECHNICAL RESULTS (WHAT WE HAVE BEEN ABLE TO SHOW).
 
+In this paper, we propose an effective protocol for encounter registration, 
+addressing these two problems systematically and
+methodically. In our protocol, 
+we design two stages for the tags, namely detecting stage and connecting stage.
+In the detecting stage, a tag works a fraction of time in order to save energy,
+and transmits a beacon periodically to identify whether encounter is happening at the moment.
+When detected an acknowledgement, the tag switches to the connecting stage and increases the 
+transmission frequency in order to establish links with other tags. In the connecting stage,
+a tag adaptively adjusts its transmission probability: it increases the probability when 
+the channel is detected idle and reduces the probability when interference is detected.  
+
+
+We present concrete analysis of our protocol under our radio communication model.
+give an upper bound that 
+We carried out a number of experiments in order to validate the radio model and present
+
+%% Remaining structure
+The remainder of the paper is organized as follows. The next section
+highlights the related works .
+Section~\ref{sectionmodel} presents
+the system model and basic definitions.
+We present the concrete protocol description
+in Section~\ref{sectionprotocol}. We  
+analyze the performance of our protocol in Section~\ref{sectionanalysis}. 
+We validate the radio model by real experiments in Section~\ref{sectionsimulation}, 
+and we conclude the paper in Section~\ref{sectionconclusion}.
 
 
  

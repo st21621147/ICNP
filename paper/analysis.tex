@@ -76,14 +76,8 @@ turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which c
     peers in the detecting stage to detect peers.
 \end{lemma}
 \begin{IEEEproof}
-    We consider two cases: 
-
-    \textbf{Case (1)} This agent is in the \emph{quiet} state. In this case 
-    a peer in the detecting stage once transmitting in the first sub-slot 
-    will definitely turn to the connecting stage in the second sub-slot.   
-
-    \textbf{Case (2)} This agent is not in the \emph{quiet} state. In this case 
-    this agent will transmit or listen in every first sub-slot which can help peers to detect it,
+    An agent in the detecting stage will transmit or listen in every first sub-slot 
+    which can help peers to detect it,
     while it only turns on the radio a fraction of time in the detecting stage.
 \end{IEEEproof}
    
@@ -94,7 +88,7 @@ $O(\theta^{-2})$ slots with high probability.
 \label{boundPC}
 Consider the $k$ agents all in the connecting stage.
 We analyze the upper bound 
-for all the agents in the clique to transmit successfully in the first sub-slot.
+for all the agents in the clique to transmit successfully.
 Note that, an agent transmitting successfully will be recorded by 
 all the other peers in the clique, and then it switches to the \emph{quiet} state. 
 
@@ -112,8 +106,7 @@ in Lemma~\ref{one}.
 
 \begin{lemma}
     \label{fast}
-    At time $T_2=T_1 + \gamma_1\cdot k  =O(k)$ 
-    it holds with high probability that $|S_{T_2}| \leq \log k$. 
+    There exists $T_2=O(k)$ it holds with high probability that $|S_{T_2}| \leq \log k$. 
 \end{lemma}
 
 To prove this lemma, we need to introduce and prove some small lemmas at first.
@@ -149,10 +142,10 @@ Based on these two lemmas, we get the following conclusion.
     in each slot. 
 \end{lemma}
 \begin{IEEEproof}
-    In each slot, the channel is idle with probability at least 
-    $4^{-2\alpha}$, and there is exactly one transmission on the channel
-    with probability at least $\alpha\cdot 4^{-2\alpha}$. By the Chernoff
-    bound, it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
+    By Lemma~\ref{mulP} and~\ref{safe} in each slot, the channel is idle with probability at least 
+    $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
+    with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
+    it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
     there are one agent switch to the quiet state in each slot.
 \end{IEEEproof}
 
@@ -170,7 +163,7 @@ are constants defined in Lemma~\ref{safe}.
 \begin{IEEEproof}
     The probability that there are more than one agents transmit in slot 
     $t$ is at least $1-exp\{-\alpha\}$ according to Equation~(\ref{mul}).
-    All the agents will halve their transmission probabilities if the channek is 
+    All the agents will halve their transmission probabilities if the channel is 
     not idle in slot $t$. Denote X as the random variable that indicates the value of 
     ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u)$. We get,
     \begin{equation*}
@@ -338,13 +331,14 @@ Finally we need to prove the following lemma.
 \begin{lemma}
     \label{one}
     For time $T_3$ when there is only one agent not switching to \emph{quiet} state,
-    at time $T_4 := 2 \cdot T_3 + \log k = O(k)$ it holds with high 
+    at time $T_4 := 2 \cdot T_3 + O(1) = O(k)$ it holds with high 
     probability that this agent successes to transmit.
 \end{lemma}
 \begin{IEEEproof}
     Since at time $T_3$ there is only one agent still attempting to transmit,
     the transmission probability will get to $\zeta$ at time $2\cdot T_3$ if it keeps
     listening. Note that if agent $u$ transmit with probability $\zeta$ for $\log k$ slots,
+    where $d$
     then with high probability there exist one slot in which agent $u$ successes to transmit.
 \end{IEEEproof}
 
