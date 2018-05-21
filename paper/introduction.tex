@@ -1,3 +1,29 @@
 \section{Introduction}
 
+Collecting detailed information about wild animals remains a significant technical challenge that
+limits the ability of Ecologists to study them, the interactions between them, and the interactions 
+between wild animals and their environment. One tools that has emerged a little over a decade ago
+and has been gaining significance is {\em encounter detection and logging}.
+
+Encounter detection systems consist of radio devices called {\em tags} that are attached to wild
+animals (and sometimes also to fixed positions and to livestock). The radios transmit identification
+packets periodically, usually once every few seconds. The radios also listen to such packets, not
+necessarily continuously, and record data about received packets in persistent memory on the tag. The
+radios are typically configured for short-range communication by using low transmit power and by 
+using high data-rates (both limit the signal-to-noise ratio at the receiver). Because the radios
+are configured for short-range communication, receiving a packet implies that the transmitting tag is
+in close proximity to the receiving tag. Recent systems record with each packet a received signal strentgh
+indication (RSSI), which helps to estimate the distance between the transmitter and receiver.
+This is the main goal of these systems: to log close-proximity
+events between two or more animals. The logs are downloaded either by physically retrieving the tags,
+or remote download to base-stations placed in locations that the animals are known to frequent.
+
+Such systems have gained popularity among Ecologists because the tags are relatively inexpensive and can
+be very small, because deployment does not require much infrastructure in the field, and because close-proximity
+encounters are key aspects of many significant events in the life of animals: mating, predation, transmission of infectious
+diseases, and so on. We comment on some of these applications in Section~\ref{sec:related-work}.
+
+
+
+ 
 
