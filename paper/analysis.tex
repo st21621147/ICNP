@@ -2,7 +2,7 @@
 \label{sectionanalysis}
 
 In this section, we prove that with a clique of $k$ agents,  
-{\pName} guarantees each agent can record all
+our protocol guarantees each agent can record all
 the peers in $O(k)$ slots with high probability.
 Note that, $k$ is not known in the execution of the protocol but just for analysis
 in this section.
@@ -142,7 +142,7 @@ Based on these two lemmas, we get the following conclusion.
     in each slot. 
 \end{lemma}
 \begin{IEEEproof}
-    By Lemma~\ref{mulP} and~\ref{safe} in each slot, the channel is idle with probability at least 
+    By Lemma~\ref{mulP} and~\ref{safe}, in each slot, the channel is idle with probability at least 
     $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
     with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
     it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
@@ -161,7 +161,7 @@ are constants defined in Lemma~\ref{safe}.
     for large enough $\alpha$.
 \end{lemma}
 \begin{IEEEproof}
-    The probability that there are more than one agents transmit in slot 
+    The probability that there are more than one agents transmitting in slot 
     $t$ is at least $1-exp\{-\alpha\}$ according to Equation~(\ref{mul}).
     All the agents will halve their transmission probabilities if the channel is 
     not idle in slot $t$. Denote X as the random variable that indicates the value of 
@@ -170,7 +170,7 @@ are constants defined in Lemma~\ref{safe}.
         Pr[X ={\sum}_{u\in S_t}\frac{\omega_t(u)}{2}] 
         \geq 1 - exp\{-\alpha\}
     \end{equation*}
-    which is at least $7/8$ when $\alpha$ is large enough. Hence,
+    which is at least $7/8$ when $\alpha > 2.1$. Hence,
     \begin{equation*}
         X \leq \frac{7}{8}\cdot\frac{1}{2}\cdot\alpha + 
         \frac{1}{8}\cdot 2\alpha 
@@ -178,9 +178,9 @@ are constants defined in Lemma~\ref{safe}.
     \end{equation*}
     Therefore, it holds with high probability that for large $\alpha$, $Pr[{\sum}_{u\in S_t}\omega_{t+1}(u) 
     \leq \alpha\cdot\frac{3}{4}] \geq \frac{7}{8}$.
-    Note that, 
-    we did not consider the effect when an agent turns to the \emph{quiet} state,
-    which only makes the summation decrease and hence is not harmful. 
+    % Note that, 
+    % we did not consider the effect when an agent turns to the \emph{quiet} state,
+    % which only makes the summation decrease and hence is not harmful. 
 \end{IEEEproof}
 
 \begin{lemma}
@@ -324,7 +324,7 @@ This is formulated as the following lemma.
     Otherwise during the period from $T_2$ to $T_3$,
     with high probability there are 
     more than $\log k$ agents switching to
-    the \emph{quiet} state.
+    the \emph{quiet} state, which can not be possible.
 \end{IEEEproof}
 
 Finally we need to prove the following lemma.
