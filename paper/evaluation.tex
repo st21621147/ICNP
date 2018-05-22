@@ -27,16 +27,21 @@ This verifies that interference indeed blocks the receiver and may prevent packe
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=3.5in]{experiments/rssiHistograms.eps}
-    \caption{Histograms of the RSSI of received packets at different distances between the transmitter and the receiver.}
+    \includegraphics[width=3in]{experiments/rssiHistograms.eps}
+    \caption{Histograms of the RSSI of received packets at different distances between 
+    the transmitter and the receiver. At the four distances reported in the figure, 
+    virtually all transmitted packets were received correctly.}
     \label{fig:rssiHistograms}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=3.5in]{experiments/rssiDistance.eps}
-    \caption{Mean RSSI (after removal of outliers) at different distances, in black. The red curve is a least-square
-    fitting of the data to a 6~dB attenuation when the distance doubles.}
+    \includegraphics[width=3in]{experiments/rssiDistance.eps}
+    \caption{Mean RSSI (after removal of outliers) at different distances, in black. 
+    The red curve is a least-square
+    fitting of the data to a 6~dB attenuation when the distance doubles.
+    The means shown in this figure are of the center 50\% of the packets; 
+    the extreme 50\% were filtered to remove outliers.}
     \label{fig:rssiDistance}
 \end{figure}
 
