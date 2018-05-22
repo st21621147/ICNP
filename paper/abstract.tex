@@ -1,18 +1,22 @@
 \begin{abstract}
-    Encounters are common interactions of wild animals.
-    Several real encounter-registration systems have been implemented
-    to help record the encounter process. In these systems, wild animals
-    are attached with energy-restricted radio devices called tags, 
-    to transmit packets periodically
-    and record the encounter process with others.
-    However, these is no effective protocol for the encounter registration due to a paradox 
-    between minimizing the power consumption of tags
+Encounters between wild animals mark of the same or different species mark important events, such 
+as mating, predation, and disease contraction, and they define the social structure of animal groups.
+Several real-world systems designed to record such encounters have been implemented in the wildlife-research community.
+In these systems, energy-restricted short-range radio devices are attached to wild animals, transmit identification
+packets periodically, and receive and record packets from others.
+%    Encounters are common interactions of wild animals.
+%    Several real encounter-registration systems have been implemented
+%    to help record the encounter process. In these systems, wild animals
+%    are attached with energy-restricted radio devices called tags, 
+%    to transmit packets periodically
+%    and record the encounter process with others.
+    However, non-trivial protocols for this problem have not been studies, and neither did the
+    fundamental tradeoff 
+    between minimizing the power consumption 
     and reducing the encounter latency. Our insight is that it is reasonable for a tag to
     increase the working frequency of its radio when encounter happens, and otherwise keeps
     the radio in a low-power mode. The key is to design a mechanism
     to identify the existence of an encounter in real-time. 
-
-
 
     In this paper, we propose a robust encounter registration protocol that with 
     high probability accomplishes the encounter registration 
