@@ -1,4 +1,4 @@
-\documentclass[conference,10pt]{IEEEtran}
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
 
 
 \usepackage{amssymb}
@@ -12,9 +12,10 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{epsfig}
+\usepackage{makecell}
 \usepackage[TABBOTCAP]{subfigure}
 
-\setlength{\columnsep}{0.25in}
+% \setlength{\columnsep}{0.25in}
     
 \newtheorem{definition}{Definition}
 \newtheorem{theorem}{Theorem}
@@ -24,12 +25,15 @@
 \newtheorem{remark}{Remark}
 \newtheorem{problem}{Problem}
 
+
+
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \hyphenpenalty=5000
 \tolerance=1200
 \newcommand{\pName}{the encounter protocol}  
 \newcommand{\sysname}{\emph{Encounternet}} 
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 
 
 \begin{document}
@@ -52,7 +56,7 @@
 
 \input{protocol}
 
-\input{analysis}
+% \input{analysis}
 
 \input{evaluation}
 

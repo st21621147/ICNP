@@ -154,10 +154,9 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
     \end{algorithmic}
 \end{algorithm}
 
-Based on the RDS, we present the operations in the detecting stage as Alg.~\ref{DA}.
-Each slot is divided into two sub-slots.
-Agents turn on and off the radio according to the RDS sequence,
-Consider a slot the radio is on. In the first sub-slot
+Based on the RDS, we present the operations in the detecting stage, as depicted in Alg.~\ref{DA}.
+Agents turn on and off the radio according to the RDS sequence.
+Consider a slot the radio is on, and the slot is divided into two sub-slots. In the first sub-slot
 an agent transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
 In the second sub-slot: 
 \begin{itemize}
@@ -210,7 +209,7 @@ and exactly one peer is transmitting.
             \ELSIF{channel is idle}
                 \STATE Set $\omega_{t+1} := min\{(1+\epsilon)\cdot\omega_t, \zeta\}$;
             \ELSE
-                \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$; $\backslash\backslash$ the channel is busy
+                \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$; %$\backslash\backslash$ the channel is busy
             \ENDIF
         \ELSE
             \IF{detect beacons in this sub-slot}
@@ -293,11 +292,51 @@ For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
 In the end of a complete round, if there is no peer detected in this whole round, 
 which indicates the encounter process is finished, the agent turns to the detecting stage .
 
+\subsection{Analysis of stage switch}
 
+When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
+We derive this conclusion from the following three lemmas.
 
+\begin{lemma}
+    \label{RDS}
+    Consider any two agents $u_i$ and $u_j$ in detecting stage.
+    In each period $T_0$, they will turn on the radio in the same slot at least once.
+\end{lemma}
+\begin{IEEEproof}
+Assume the time drift between $u_i$ and $u_j$ is $\delta_{ij}$ (mod $T_0$).
+In the RDS constructed under $T_0$, there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv \delta_{ij}$ (mod $T_0$).
+Thus the $a_i^{th}$ slot in a period of $u_i$ is exactly the $a_j^{th}$ slot in a period of $a_j^{th}$ and both of them
+turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which completes the proof.
+\end{IEEEproof}
 
-
-
-% The key idea is that, since a round of slots is very short 
-% in real time, the nearby agents can be seen as a clique, i.e., 
-% every two nodes are neighbors.  
+\begin{lemma}
+    \label{dtoc}
+    Consider $k$ agents all in the detecting stage at the beginning, 
+    an agent in detecting stage will turn to the connecting stage in 
+    $O(\theta^{-2})$ slots with high probability.
+\end{lemma}
+\begin{IEEEproof}
+    By Lemma~\ref{RDS}, an agent can turn on the radio in the same 
+    slot with any other peer at least once during a period of $T_0$.
+    The probability it detects a peer in a period of $T_0$ is at least
+    $Pr \geq 1 - \frac{1}{2^{k-1}}$.
+    Hence given a small enough constant $\eta$,  
+    it holds with high probability that an agent will turn to connecting stage in 
+    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}}$ periods, which is 
+    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
+    in total.    
+\end{IEEEproof}
+\vspace{0.1in}
+\begin{lemma}
+    \label{case}
+    An agent turns to the connecting stage will increase the probability that other
+    peers in the detecting stage to detect peers.
+\end{lemma}
+\begin{IEEEproof}
+    An agent in the detecting stage will transmit or listen in every first sub-slot 
+    which can help peers to detect it,
+    while it only turns on the radio a fraction of time in the detecting stage.
+\end{IEEEproof}
+   
+According to Lemma~\ref{dtoc} and \ref{case}, every agent will turn to the connecting stage in 
+$O(\theta^{-2})$ slots with high probability. 
