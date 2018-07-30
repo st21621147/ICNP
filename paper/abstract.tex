@@ -1,31 +1,38 @@
 \begin{abstract}
-Encounters between wild animals mark of the same or different species mark important events, such 
-as mating, predation, and disease contraction, and they define the social structure of animal groups.
-Several real-world systems designed to record such encounters have been implemented in the wildlife-research community.
-In these systems, energy-restricted short-range radio devices are attached to wild animals, transmit identification
-packets periodically, and receive and record packets from others.
+Encounters between wild animals mark important events of 
+the same or different species, such 
+as mating, predation, and disease contraction, and they define 
+the social structure of animal groups.
+Several real-world systems designed to record such encounters 
+have been implemented in the wildlife-research community.
+In these systems, energy-restricted short-range radio devices 
+are attached to wild animals, transmitting identification
+packets periodically, receiving and recording packets from others.
 %    Encounters are common interactions of wild animals.
 %    Several real encounter-registration systems have been implemented
 %    to help record the encounter process. In these systems, wild animals
 %    are attached with energy-restricted radio devices called tags, 
 %    to transmit packets periodically
 %    and record the encounter process with others.
-    However, non-trivial protocols for this problem have not been studies, and neither did the
-    fundamental tradeoff 
-    between minimizing the power consumption 
-    and reducing the encounter latency. Our insight is that it is reasonable for a tag to
-    increase the working frequency of its radio when encounter happens; otherwise it keeps
-    the radio in a low-power mode.  
+However, non-trivial protocols for this problem have not been studied, and neither did the
+fundamental tradeoff 
+between minimizing the power consumption 
+and reducing the encounter latency. 
+The key challenge is the uncertain mobility and herd characteristics of wild 
+animals and our dominant strategy is to design a mechanism
+to identify the existence of an encounter in real-time.
+% Our insight is that it is reasonable for a tag to
+% increase the working frequency of its radio when encounter happens; otherwise it keeps
+% the radio in a low-power mode.  
 
-    In this paper, we propose a robust encounter registration protocol that with 
-    high probability accomplishes the encounter registration 
-    in $O(k)$ slots time, assuming $k$ is the number of encounter tags.
-    Our protocol consists of two process: detect other tags with low energy consumption; 
-    and make connections with the detected tags to record each other's ID. 
-    We analyze the performance of this protocol under a formulated radio model and carry out a number of
-    experiments to validate this model.
-    To the best of our knowledge, this is the first practical protocol for a real 
-    encounter-registration system.
+In this paper, we propose a robust encounter registration protocol.
+Our protocol consists of two processes: detect other tags with low energy consumption; 
+and make connections with the detected tags to record each other's ID. 
+We conduct experiments and extensive simulations to verify the scalability
+of the protocol. Also, we present explicit animal models of mobility and evaluation results
+show the strengths of our protocol in mobile wildlife environment.
+To the best of our knowledge, this is the first practical 
+protocol for a real encounter-registration system.
 
 \end{abstract}
 

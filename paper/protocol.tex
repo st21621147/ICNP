@@ -9,7 +9,7 @@ The protocol consists of two stages: detecting stage and connecting stage.
     \item \textbf{Stage 1: detecting stage.} In this stage, an agent attempts to
     detect whether there are nearby peers, regardless of who they are. 
     \item \textbf{Stage 2: connecting stage} In this stage, an agent attempts to 
-    identify the nearby peer(s) and record their IDs to its log.
+    identify nearby peer(s) and record their IDs to its log.
 \end{itemize}
 
 Initially, each agent starts from the detecting stage. 
@@ -43,12 +43,12 @@ e.g., denote the predefined duty cycle for
 all the agents is $\theta$, the tag radio of each agent will work
 $\theta T_0$ slots in every period of $T_0$ slots. 
 
-However, it is very ineffective
+However, it is ineffective
 when two agents encounter and one is in $sleep$ state while the other is transmitting
 or listening. 
 To technically achieve synchronizing the time that agents turn on the radio without extra cost,
 we introduce the technique of Relax Difference Set (RDS)~\cite{luk1997two}.
-We use the RDS technique to guarantee that every encounter pair 
+We use the RDS technique to guarantee every encounter pair 
 of agents turn on the radio in the same slot at least once in each round $T_0$.
 
 RDS is an efficient tool to construct cyclic quorum systems~\cite{Peleg1995The}. 
@@ -123,7 +123,7 @@ $\lambda^2 \geq T_0$. Every $d$ in range $[1, \lfloor T_0/2 \rfloor]$
 can be represented as: $ d = 1 + j \times \lambda - i$, where $1 \leq j \leq \mu,
 1 \leq i \leq \lambda$. Thus, there exists $a_j = 1 + j \times \lambda$
 from Line. \ref{RDSline2} and $a_i = i$ from Line. \ref{RDSline3}
-satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
+satisfying  $a_j - a_i \equiv d$. Then, the lemma holds.
 \end{IEEEproof}
 
 \begin{algorithm}[!h]

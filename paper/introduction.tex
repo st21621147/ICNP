@@ -9,17 +9,17 @@ and has been gaining significance is
 Bohm2009WildlifeLivestock,Ripperger2016ProximitySensing}.
 
 Encounter-registration system~\cite{Levin2015Performance,Menhill2012NovelTelemetry,dressler2016bats} 
-is a kind of wildlife tracing systems.
-It consists of radio devices called {\em tags} attached to wild
+is a kind of wildlife tracing systems,
+consisting of radio devices called {\em tags} attached to wild
 animals (and sometimes also to fixed positions and livestock), as depicted in Fig.~\ref{tags}. 
 The radios transmit identification
 packets periodically and listen to such packets from other tags,
-recording data about received packets in persistent memory on the tag. The
+recording data about received packets in persistent memory in the tag. The
 radios are typically configured for short-range communication by using low transmitting power and by 
 using high data-rates (both limit the signal-to-noise ratio at the receiver). Since the radios
-are configured for short-range communication, receiving a packet implies that the transmitting tag is
-in close proximity to the receiving tag. Recent systems record each packet with a received signal strength
-indication (RSSI)~\cite{Daiya2011Experimental}, which helps to estimate the distance between the transmitter and receiver.
+are configured for short-range communication, receiving a packet implies the transmitting tag is
+in close proximity to the receiving tag. Recent systems record each packet with received signal strength
+indication (RSSI)~\cite{Daiya2011Experimental}, helping to estimate the distance between the transmitter and receiver.
 This is the main goal of these systems: to log close-proximity
 events between two or more animals. The logs are downloaded either by physically retrieving the tags,
 or by remotely downloading to base-stations placed in locations that the animals pass by frequently.
@@ -43,7 +43,7 @@ events in the life of animals: mating, predation, disseminating diseases, etc.
 
 Unfortunately, there is no robust encounter registration protocol 
 for tag radios to transmit and receive packets efficiently.
-The key problem is the uncertain mobility and herd characteristics of wild 
+The key challenge is the uncertain mobility and herd characteristics of wild 
 animals. There is variability among species in their movement and 
 interaction behavior. This issue adds a great deal of difficulties to
 solve two challenging protocol-related problems. 
