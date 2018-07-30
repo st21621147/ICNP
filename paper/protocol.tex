@@ -21,16 +21,16 @@ and $listen$ state.
 The key idea of {\pName} is that, any single agent keeps in detecting 
 stage to reduce ineffective energy consumption. When encounter happens, 
 it detects the existence of nearby peers and turns to the connecting stage 
-to identify those peers (or a peer) as fast as possible and record the encounter process to its log. 
+to identify those peers (or a peer) as fast as possible, and record the encounter process to its log. 
 when the encounter process is determined to be finished in the connecting stage, 
 the agent turns back to the detecting stage.
 
 \begin{remark}
     In {\pName}, there is no need to synchronize the stage between agents and
     {\pName} still works when encounter peers are in different stage, e.g., an agent in detecting 
-    stage bursts into a stable clique in connecting stage. 
+    stage comes into a stable clique in connecting stage. 
     The proof of correctness will be presented 
-    in section~\ref{sectionanalysis}. 
+    in section~\ref{proof}. 
 \end{remark}
 
 In the following, we describe the operations of these two stages in detail. 
@@ -156,7 +156,7 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma can be derived.
 
 Based on the RDS, we present the operations in the detecting stage, as depicted in Alg.~\ref{DA}.
 Agents turn on and off the radio according to the RDS sequence.
-Consider a slot the radio is on, and the slot is divided into two sub-slots. In the first sub-slot
+Consider a slot the radio is on, and then the slot is divided into two sub-slots. In the first sub-slot
 an agent transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
 In the second sub-slot: 
 \begin{itemize}
@@ -176,7 +176,7 @@ In the second sub-slot:
 
 As discussed before, the aim of this stage is to detect nearby peer(s) as fast as possible 
 (if exists), and either successful transmission or detecting busy on the channel activates the agent
-to switch to the connecting stage. Hence we fix the transmitting probability as $\omega_0 = \frac{1}{2}$. 
+to switch to the connecting stage. %Hence we fix the transmitting probability as $\omega_0 = \frac{1}{2}$. 
 
 % \begin{remark}
 %     Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
@@ -188,9 +188,9 @@ to switch to the connecting stage. Hence we fix the transmitting probability as 
 \subsection{Connecting stage}
 
 In the connecting stage, agents attempt to identify the nearby 
-peers and record the encounter to its log.
+peers and record the encounter process~(messages containing peers' IDs) to its local log.
 A successful identification happens only if the agent is listening
-and exactly one peer is transmitting. 
+and only one peer is transmitting. 
 
 \begin{algorithm}[ht]
     \caption{Connecting Algorithm}
@@ -282,17 +282,18 @@ In the second sub-slot:
     peers, and it keeps listening in all the rest first sub-slots of this round,
     which is called \emph{quiet} state.
     \item if the agent detects nothing in this sub-slot, it means its previous message
-    failed to propagate due to simultaneous transmissions. Thus it divides its transmission 
+    failed to propagate due to simultaneous transmissions. Thus it divides its transmitting 
     probability by a factor ${(1+\epsilon)}$. 
     \end{itemize}
 \end{itemize}
 
-Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmission probability adaptively.
+Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmitting probability adaptively.
 For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
 In the end of a complete round, if there is no peer detected in this whole round, 
 which indicates the encounter process is finished, the agent turns to the detecting stage .
 
 \subsection{Analysis of stage switch}
+\label{proof}
 
 When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
 We derive this conclusion from the following three lemmas.

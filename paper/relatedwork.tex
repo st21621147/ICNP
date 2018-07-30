@@ -2,46 +2,58 @@
 \label{sec:related-work}
 
 \subsection{Encounter-registration system}
-The first encounter-registration system has been developed by a company called Sirtrack 
+The first encounter-registration system was developed by a company called Sirtrack 
 over a decade ago~\cite{Prangle2006NewRadiocolars}. The tags
-were placed on collars that were attached to wild mammals. The tags are fairly heavy, weighing 45--450g, depending on the
-size of battery. Tags transmit every 1.5~s, and are able to record encounters of 15~s or longer. The system is
-commercial has has been used extensively, for example, to study the possibility of disease transmission between cattle 
+are placed on collars attached to wild mammals. 
+They are fairly heavy, weighing 45--450g, depending on the
+size of battery. % Tags transmit every 1.5~s, and are able to record encounters of 15~s or longer. 
+The system has been commercially used extensively. For example, it is used to study 
+the possibility of disease transmission between cattle 
 and wild badgers~\cite{Bohm2009WildlifeLivestock}.
 
-The next major advance was a system called {\em Enounternet}~\cite{Menhill2012NovelTelemetry,Rutz2012AutomatedMapping}, 
+The next generalization was a system called {\em Enounternet}~\cite{Menhill2012NovelTelemetry,Rutz2012AutomatedMapping}, 
 which has been available commercially for a few years
-but is no longer available. The key innovation in Encounternet was weight: tags used a tiny printed-circuit board and
-could be powered by miniature batteries, allowing tags weighing 1.3g and up to be manufactured. Clearly, the small
-batteries restrict the life-span of tags and increase the importance of effective protocols, especially with respect
-to low-power operation. The small size of encounternet tags has enabled the study of interaction of small species, 
-including small birds~\cite{Levin2015Performance} and freshwater fish~\cite{Tentelier2016FishNetwork}, to cite just a few.
-Another innovation of the Encounternet system has been the recording of RSSI with every reception report, allowing
+but is no longer available. The key innovation of Encounternet was tags' weight: 
+tags used a tiny printed-circuit board and
+could be powered by miniature batteries, allowing tags weighing 1.3g and up to be manufactured. 
+Clearly, the small batteries restrict the life-span of tags and increase the importance of effective protocols, 
+especially with respect to low-power operation. 
+The small size of Encounternet tags has enabled the study of interaction of small species, 
+including small birds~\cite{Levin2015Performance} and freshwater fish~\cite{Tentelier2016FishNetwork}.
+Another innovation of the Encounternet system is the recording of RSSI with every reception report, allowing
 researchers to estimate the distance of each encounter. 
-
-Interestingly, none of the papers that describe these systems and 
-ecological research carried out with them gives any details on the
-MAC-layer protocol that was used, nor on how the receiver is duty cycled. In particular, it appears that many of these 
-protocols are not particularly efficient. For example, switching an Encounternet tag with a particular battery from
-transmit-only mode (intended to record its proximity to base stations) to encounter-registration mode reduces the lifespan
-of the tag from 7.5 days to less than a day, indicating that the receiver is active a significant fraction of the time.
-
-On the positive side, most of these papers do include validation and calibration studies intended to quantify the distances
-at which encounters are recorded. We report below on a similar study carried out by us.
 
 More recently, prototype Encounternet-like tags have been developed and tested on
 bats~\cite{Ripperger2016ProximitySensing,dressler2016bats}. These tags include a wake-up receiver, which
 enables nano-power listening without maintenance of inter-tag synchronized clocks. These tags  
 do not appear to have been commercialized or widely-used otherwise.
 
+
+
+
 \subsection{Protocol for encounter registration}
 
-Although to the best of our knowledge, there has been no analysis of the protocols 
-studying on the encounter registration problem,
+
+Unfortunately, none of the papers that describe these systems and 
+ecological research give any details on the
+MAC-layer protocol that is used, nor on how the receiver is duty cycled. 
+Existing methods to encounter registration problem are mainly based on fixed transmitting 
+probability~\cite{Menhill2012NovelTelemetry,Rutz2012AutomatedMapping}
+(i.e., agents transmit a beacon with a fixed probability $p$ and listen with $1-p$). 
+In particular, it appears that many of these 
+protocols are not particularly efficient. For example, switching 
+an Encounternet tag with a particular battery from
+transmit-only mode 
+to encounter-registration mode reduces the lifespan
+of the tag from 7.5 days to less than a day, indicating that the 
+receiver is active a significant fraction of the time.
+
+Although to the best of our knowledge, there has been no analyses of the protocols 
+for encounter registration problem,
 several similar problems are well-studied in the wireless network literature, 
 such as  
-neighbor discovery problem~\cite{Bakht2012Searchlight, Sun2014Hello,Chen2015On}, 
 minimum dominating set problem~\cite{Scheideler2008An,Yu2013Review},
+neighbor discovery problem~\cite{Bakht2012Searchlight, Sun2014Hello,Chen2015On}
 and information exchange problem~\cite{Capetanakis1979Tree,Daum2013Maximal,Yu2017Uniform}.
 
 Minimum dominating set problem~\cite{Scheideler2008An,Yu2013Review} is studied to 
@@ -60,13 +72,13 @@ A common solution to these problems is to control the transmission probability o
 network, making it optimal to transmit successfully.
 Some deterministic methods, such as quorum system~\cite{Peleg1995The} and prime number, are also 
 adopted to help synchronization in the protocol design.
-
 The major difference between the problems above and the encounter registration problem
-in this paper is the dynamics of the wild animals. It makes the problem complicated that whether an encounter is happening at the moment is unknown.
-Besides the encounter behavior varies from individual to individual. Some animals are eager to 
-keep company with peers while others stay alone most of the time.
-Since animals are attached with energy-restrained
-tags, the energy-efficiency should also be taken into consideration.
-All these factors make the problem challenging.
+in this paper is the mobility of the wild animals. It makes the problem 
+complicated that whether an encounter is happening at the moment is unknown.
+% Besides the encounter behavior varies from individual to individual. Some animals are eager to 
+% keep company with peers while others stay alone most of the time.
+% Since animals are attached with energy-restrained
+% tags, the energy-efficiency should also be taken into consideration.
+% All these factors make the problem challenging.
   
 
