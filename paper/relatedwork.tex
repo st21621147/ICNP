@@ -6,8 +6,8 @@ The first encounter-registration system was developed by a company called Sirtra
 over a decade ago~\cite{Prangle2006NewRadiocolars}. The tags
 are placed on collars attached to wild mammals. 
 They are fairly heavy, weighing 45--450g, depending on the
-size of battery. % Tags transmit every 1.5~s, and are able to record encounters of 15~s or longer. 
-The system has been commercially used extensively. For example, it is used to study 
+size of the battery. % Tags transmit every 1.5~s, and are able to record encounters of 15~s or longer. 
+This system has been commercially used, for example, to study 
 the possibility of disease transmission between cattle 
 and wild badgers~\cite{Bohm2009WildlifeLivestock}.
 
@@ -20,8 +20,8 @@ Clearly, the small batteries restrict the life-span of tags and increase the imp
 especially with respect to low-power operation. 
 The small size of Encounternet tags has enabled the study of interaction of small species, 
 including small birds~\cite{Levin2015Performance} and freshwater fish~\cite{Tentelier2016FishNetwork}.
-Another innovation of the Encounternet system is the recording of RSSI with every reception report, allowing
-researchers to estimate the distance of each encounter. 
+% Another innovation of the Encounternet system is the recording of RSSI with every reception report, allowing
+% researchers to estimate the distance of each encounter. 
 
 More recently, prototype Encounternet-like tags have been developed and tested on
 bats~\cite{Ripperger2016ProximitySensing,dressler2016bats}. These tags include a wake-up receiver, which
@@ -61,24 +61,33 @@ deal with interference challenges for the wireless multi-hop networks.
 This problem focus on the communication models, such as unit disk graph model~\cite{Lebhar2009Unit} (UDG),
 graph-based model~\cite{De2007A} and Signal to Interference plus Noise Ratio model~\cite{Lee2007Signal} (SINR).
 Neighbor discovery problem is well studied in the wireless sensor 
-networks. Many algorithms~\cite{Bakht2012Searchlight, Sun2014Hello,Chen2015On} 
+networks. Protocols~\cite{Bakht2012Searchlight, Sun2014Hello,Chen2015On} 
 are designed for two nodes to discover each other and 
 are applied directly to the multi-node scenario.
 Information exchange problem~\cite{Capetanakis1979Tree,Daum2013Maximal,Yu2017Uniform} is 
 studied on the information propagation in a single-hop network. 
 In the network, there are active nodes with packets to transmit 
 and inactive nodes waiting to receive.
-A common solution to these problems is to control the transmission probability of the node in the 
-network, making it optimal to transmit successfully.
-Some deterministic methods, such as quorum system~\cite{Peleg1995The} and prime number, are also 
-adopted to help synchronization in the protocol design.
-The major difference between the problems above and the encounter registration problem
-in this paper is the mobility of the wild animals. It makes the problem 
-complicated that whether an encounter is happening at the moment is unknown.
+
+However, protocols for these problems are not well applicable to encounter-registration systems.
+Whether an encounter is happening at the moment is unknown, making the problem much more complicated,
+and thus high efficiency (when an encounter happens)
+and low-energy consumption (when it does not) 
+can hardly be mutually exclusive.
+
+% Why are the protocols for these problems not applicable to encounter registration problem?
+% the key characteristic satisfy 
+
+% A common solution to these problems is to control the transmission probability of the node in the 
+% network, making it optimal to transmit successfully.
+% Some deterministic methods, such as quorum system~\cite{Peleg1995The} and prime number, are also 
+% adopted to help synchronization in the protocol design.
+% The major difference between the problems above and the encounter registration problem
+% in this paper is the mobility of the wild animals. It makes the problem 
+% complicated that whether an encounter is happening at the moment is unknown.
 % Besides the encounter behavior varies from individual to individual. Some animals are eager to 
 % keep company with peers while others stay alone most of the time.
 % Since animals are attached with energy-restrained
 % tags, the energy-efficiency should also be taken into consideration.
 % All these factors make the problem challenging.
   
-

@@ -35,7 +35,7 @@ events in the life of animals: mating, predation, disseminating diseases, etc.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=3in]{figures/tag}
-    \caption{Printed circuit boards for Encounternet tags~\protect\cite{Menhill2012NovelTelemetry}.
+    \caption{Printed circuit boards for Encounternet tags.%~\protect\cite{Menhill2012NovelTelemetry}.
     Lines are 5mm apart. Complete tags require the addition of miniature batteries, whip antenna, and
     coating. The small batteries make effective protocols important.}
     \label{tags}
@@ -43,9 +43,14 @@ events in the life of animals: mating, predation, disseminating diseases, etc.
 
 Unfortunately, there is no robust encounter registration protocol 
 for tag radios to transmit and receive packets efficiently.
+Worse, existing protocols for relevant problems (e.g., neighbor discovery problem~\cite{Bakht2012Searchlight}) 
+fail because high efficiency (when an encounter happens)
+and low-energy consumption (when there is no encounter) 
+can be mutually exclusive.
 The key challenge is the uncertain mobility and herd characteristics of wild 
 animals. There is variability among species in their movement and 
-interaction behavior. This issue adds a great deal of difficulties to
+interaction behavior. 
+This issue adds a great deal of difficulties to
 solve two challenging protocol-related problems. 
 One problem is to minimize the power used for listening to other tags. 
 All of the systems developed so far use low-power integrated
@@ -53,12 +58,13 @@ UHF transceivers, and the power consumed by these while receiving is
 comparable to the power that they use to transmit. 
 The other protocol-related problem is interference. 
 If many tags transmit simultaneously, receiving tags may fail
-to reconstruct valid packets. Paradoxically, highly-efficient 
-systems with good time synchronization and short activity
-periods suffer more from this problem than less efficient systems 
-in which the clocks of tags are not synchronized tightly
-enough to transmit simultaneously. This is not a theoretical problem; 
-many species of animals, including many species of
+to reconstruct valid packets. 
+% Paradoxically, highly-efficient 
+% systems with good time synchronization and short activity
+% periods suffer more from this problem than less efficient systems 
+% in which the clocks of tags are not synchronized tightly
+% enough to transmit simultaneously. 
+Many species of animals, including many species of
 birds and bats, roost together, so encounters of tens or hundreds 
 of individuals are not necessarily rare.
 
@@ -104,15 +110,17 @@ the channel is detected idle and reduces the probability when interference is de
 
 The contributions of the paper are summarized as follows:
 \begin{itemize}
-\item[1)] We formulate the problem model and propose a robust protocol for encounter registration problem 
-with theoretical analyses. 
-\item[2)] We conduct experiments and extensive simulations. Our evaluation results show that, 
-compared to baseline methods, our protocol achieves lower latency, higher encounter 
-registration rate and better scalability.
+\item[1)] We propose a robust encounter registration protocol  
+with detailed theoretical analysis. 
+\item[2)] We conduct extensive simulations and experiments. Our evaluation results show that, 
+compared to baseline methods, our protocol achieves better scalability.
 \item[3)] We present explicit animal models of mobility and evaluation results show that,
-compared to baseline methods, our protocol has better performance, regarding three species
-and three encounter cases.
+compared to baseline methods, our protocol has better performance, regarding three species animals. 
+%The results also show the potential of applicability in various wireless mobile networks.
 \end{itemize}
+
+Our protocol can be widely applied to various wireless mobile networks, （e.g.， mobile Ad hoc network management.）
+
 
 %% Remaining structure
 The remainder of the paper is organized as follows. 
@@ -121,8 +129,6 @@ Section~\ref{sectionmodel} presents the system model and basic definitions.
 We present the concrete protocol design
 in Section~\ref{sectionprotocol}. 
 %  We analyze the performance of our protocol in Section~\ref{sectionanalysis}. 
-We carry out experiments for model validation in Section~\ref{experiments}
-and simulations for protocol validation in in Section~\ref{Simulations}.
+We carry out simulations for protocol validation in in Section~\ref{Simulations}
+and experiments for model validation in Section~\ref{experiments}.
 The paper is concluded in Section~\ref{sectionconclusion}.
-
-

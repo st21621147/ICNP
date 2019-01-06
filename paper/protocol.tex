@@ -1,4 +1,5 @@
-\section{Adaptive Wildlife Encounter protocol}
+\section{Encounter registration protocol}
+
 \label{sectionprotocol}
 
 In this section, we present our encounter registration protocol.
@@ -143,8 +144,10 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma holds.
                 \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~the~first~sub-slot}
                     \STATE Transmit a beacon and turn to the \textbf{connecting stage};
                 \ENDIF
-            \ELSIF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~this~sub-slot}
-                \STATE Turn to the \textbf{connecting stage};
+            \ELSE
+                \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~this~sub-slot}
+                    \STATE Turn to the \textbf{connecting stage};
+                \ENDIF
             \ENDIF
         \ELSE
                 \STATE $Sleep$ in the whole slot;
@@ -188,9 +191,10 @@ to switch to the connecting stage. %Hence we fix the transmitting probability as
 \subsection{Connecting stage}
 
 In the connecting stage, agents attempt to identify the nearby 
-peers and record the encounter process~(messages containing peers' IDs) to its local log.
-A successful identification happens only if the agent is listening
-and only one peer is transmitting. 
+peers and record the encounter process%~(messages containing peers' IDs) 
+to its local log.
+% A successful identification happens only if the agent is listening
+% and only one peer is transmitting. 
 
 \begin{algorithm}[ht]
     \caption{Connecting Algorithm}
@@ -211,7 +215,7 @@ and only one peer is transmitting.
             \ELSE
                 \STATE Set $\omega_{t+1} := \frac{\omega_t}{(1+\epsilon)}$; %$\backslash\backslash$ the channel is busy
             \ENDIF
-        \ELSE
+        \ELSE%IF{the agent is in $transmit$ state in the first sub-slot}
             \IF{detect beacons in this sub-slot}
                 \STATE $\omega_{t+1} := 0$;
             \ELSE
@@ -232,33 +236,35 @@ and only one peer is transmitting.
 
 
 
-The collision detection (CD) mechanism is incorporated in this stage 
-to increase of efficiency. This mechanism enables the listening agent 
-to notify the transmitting peers of the transmission outcomes, 
-and thus they take measures to reduce the collisions if not successful.
+% The collision detection (CD) mechanism is incorporated in this stage 
+% to increase of efficiency. This mechanism enables the listening agent 
+% to notify the transmitting peers of the transmission outcomes, 
+% and thus they take measures to reduce the collisions if not successful.
 
-In this stage, every $\hat{T}$ slots consists of a round. Each 
-agent repeats the operations in Alg.~\ref{CA} round by round and 
-it turns to the connecting stage when it cannot find any peer in a complete round, 
-as the operation in Line~\ref{backDS}.
+In this stage, pre-defined $\hat{T}$ slots consists of a round. 
+The transmitting probability is initially set as $\zeta$, 
+which is a pre-defined constant. Each agent repeats the 
+operations in Alg.~\ref{CA} round by round and 
+it turns to the detecting stage when it cannot 
+find any peer in a complete round.
+%as the operation in Line~\ref{backDS}. 
 
-As discussed in section~\ref{sectionmodel}, $\hat{T}$ is relatively short in 
-real world, thus the communication connectivity stays stable in a round. 
-However, due to the dynamic movements of agents, the communication connectivity
-may change from round to round, so all the parameters will be 
-initialized at the beginning of each round and adaptively adjusted later 
-according to the transmission outcome.
+% As discussed in section~\ref{sectionmodel}, $\hat{T}$ is relatively short in 
+% real world, thus the communication connectivity stays stable in a round. 
+% However, due to the dynamic movements of agents, the communication connectivity
+% may change from round to round, so all the parameters will be 
+% initialized at the beginning of each round and adaptively adjusted later 
+% according to the transmission outcome.
 
-Each slot is divided into two sub-slots.
-Agents execute transmission or reception in the first sub-slot, 
-and in the second sub-slot take actions responding to the outcome of the previous sub-slot
-(success/fail to transmit/receive a message).
+
+% Agents execute transmission or reception in the first sub-slot, 
+% and in the second sub-slot take actions responding to the outcome of the previous sub-slot
+% (success/fail to transmit/receive a message).
 % (if receive a message 
 % successfully in the first sub-slot). %The algorithm in detecting stage is formulated as Alg.~\ref{CA}.
+% Since the number of the nearby peers is unknown to each agent, 
 
-Since the number of the nearby peers is unknown to each agent, 
-the transmitting probability is initially set as $\zeta$, which is a pre-defined constant.
-
+Each slot is divided into two sub-slots.
 In the first sub-slot of each slot $t$, an agent transmits a message containing ID 
 with probability $\omega_t$ and listen with probability $(1 - \omega_t)$. 
 In the second sub-slot: 
@@ -288,18 +294,18 @@ In the second sub-slot:
 \end{itemize}
 
 Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmitting probability adaptively.
-For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
+% For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
 In the end of a complete round, if there is no peer detected in this whole round, 
 which indicates the encounter process is finished, the agent turns to the detecting stage .
 
-\subsection{Analysis of stage switch}
+\subsection{Analysis of the protocol}
 \label{proof}
 
 When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
 We derive this conclusion from the following three lemmas.
 
 \begin{lemma}
-    \label{RDS}
+    \label{RDS_lem}
     Consider any two agents $u_i$ and $u_j$ in detecting stage.
     In each period $T_0$, they will turn on the radio in the same slot at least once.
 \end{lemma}
@@ -312,12 +318,13 @@ turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which c
 
 \begin{lemma}
     \label{dtoc}
-    Consider $k$ agents all in the detecting stage at the beginning, 
+    Consider $k$ agents all in the detecting stage at the beginning.
+    Given a small enough constant $\eta$, 
     an agent in detecting stage will turn to the connecting stage in 
     $O(\theta^{-2})$ slots with high probability.
 \end{lemma}
 \begin{IEEEproof}
-    By Lemma~\ref{RDS}, an agent can turn on the radio in the same 
+    By Lemma~\ref{RDS_lem}, an agent can turn on the radio in the same 
     slot with any other peer at least once during a period of $T_0$.
     The probability it detects a peer in a period of $T_0$ is at least
     $Pr \geq 1 - \frac{1}{2^{k-1}}$.
@@ -341,3 +348,46 @@ turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which c
    
 According to Lemma~\ref{dtoc} and \ref{case}, every agent will turn to the connecting stage in 
 $O(\theta^{-2})$ slots with high probability. 
+
+Next, we prove that with constant probability,
+there are one agent switch to the quiet state in each slot.
+
+\begin{lemma}
+    \label{sumP}
+    Consider a set of $l$ agents, $u_1, u_2,\dots, u_l$.
+    For an agent $u_i$, it transmits with probability 
+    $0 < \omega(u_i) < \frac{1}{2}$. Let $p_0$ denote the 
+    probability that the channel is idle in a slot; and $p_1$ denote 
+    the probability that there is exactly one transmission in a slot.
+    Then $p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)\leq p_1 \leq
+    2\cdot p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)$     
+\end{lemma}
+
+\begin{lemma}
+    \label{mulP}
+    With $a_i \in [0, \frac{1}{2}]$ for $i = 0,1,\dots,$ it holds that
+    \begin{equation}
+        \label{mul}
+        4^{-{\sum}_{i}a_i}\leq {\prod}_{i}(1-a_i)\leq e^{-{\sum}_{i}a_i}. 
+    \end{equation}
+\end{lemma}
+
+The proof of Lemma~\ref{sumP} and Lemma~\ref{mulP}
+are omitted here; inspirations are drawn from \cite{Richa2010A} 
+and \cite{Daum2013Maximal}.
+
+\begin{lemma}
+    \label{safe}
+    For a slot $T>0$ with $|S_t| \ge \log k$, if 
+    there exist constants $\alpha_1, \alpha_2 \ge 1$ such that
+    $\alpha_1 \leq \sum_{u\in S_t}{\omega}_t(u) \leq \alpha_2$, then with constant probability 
+    there is one active node switching to the \emph{quiet} state
+    in each slot. 
+\end{lemma}
+\begin{IEEEproof}
+    By Lemma~\ref{mulP} and~\ref{mulP}, in each slot, the channel is idle with probability at least 
+    $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
+    with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
+    it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
+    there are one agent switch to the quiet state in each slot.
+\end{IEEEproof}
