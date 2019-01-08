@@ -11,55 +11,55 @@ Formally, this result is derived from the following theorem.
     \label{bound}
     Consider an encounter process of $k$ agents~($k$ is a integer $k \geq 2)$ :
     \begin{itemize} 
-    \item[(1)] An agent in detecting stage  will switch to the connecting stage in $O(\theta^{-2})$
-    slots with high probability. Recall that $\theta$ is the pre-defined duty cycle and can be seen 
-    as a constant.
-    \item[(2)] When all the agents are in the connecting stage, all of them will
-    transmit successfully in a first sub-slot and turn to the \emph{quiet} state 
+    \item[(1)] When encounter happens, an agent in detecting stage can switch to connecting stage in $O(\theta^{-2})$
+    slots with high probability. Recall that $\theta$ is the pre-defined duty cycle and can be seen as a constant.
+    \item[(2)] When all the agents are in connecting stage, all of them can
+    transmit successfully and turn to the $quiet$ state 
     in $O(k)$ slots with high probability.
     \end{itemize}
 \end{theorem}
 
-We prove these two conclusions in Theorem~\ref{bound} in Section~\ref{boundSW}, and
+We prove these two conclusions in Section~\ref{boundSW}, and
 Section~\ref{boundPC} respectively. 
-Based on this theorem, we can
-estimate a duration of the encounter process
+Based on Theorem~\ref{bound}, we can
+estimate the duration of the encounter process
 between any pair of agents $u_i$ and $u_j$, 
 by checking the records in their local logs.  
 If there are $z$ consecutive records of the other peer, it indicates a 
 duration of $2z\hat{T}t_0$. Recall that $2t_0$ is the real time 
 of a slot and $\hat{T}$ is the number of slots of a round in 
-the connecting stage, which is 
-sufficiently large to satisfy the bound 
-of {\pName}  while still short enough relative to the 
-time required for an agent to move a short distance. 
+connecting stage.
+% , which is 
+% sufficiently large to satisfy the bound 
+% of {\pName}  while still short enough relative to the 
+% time required for an agent to move a short distance. 
 
 \subsection{Time bound for detecting stage}
 \label{boundSW}
 
 When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
-We derive this conclusion from the following three lemmas.
+We derive this conclusion from the following two lemmas.
 
 \begin{lemma}
-    \label{RDS}
+    \label{RDS1}
     Consider any two agents $u_i$ and $u_j$ in detecting stage.
-    In each period $T_0$, they will turn on the radio in the same slot at least once.
+    In each period $T_0$, they turn on the radio in the same slot at least once.
 \end{lemma}
 \begin{IEEEproof}
 Assume the time drift between $u_i$ and $u_j$ is $\delta_{ij}$ (mod $T_0$).
 In the RDS constructed under $T_0$, there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv \delta_{ij}$ (mod $T_0$).
 Thus the $a_i^{th}$ slot in a period of $u_i$ is exactly the $a_j^{th}$ slot in a period of $a_j^{th}$ and both of them
-turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which completes the proof.
+turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}.
 \end{IEEEproof}
 
 \begin{lemma}
     \label{dtoc}
-    Consider $k$ agents all in the detecting stage at the beginning, 
-    an agent in detecting stage will turn to the connecting stage in 
+    Consider $k$ agents all in detecting stage at the beginning, 
+    an agent in detecting stage turns to connecting stage in 
     $O(\theta^{-2})$ slots with high probability.
 \end{lemma}
 \begin{IEEEproof}
-    By Lemma~\ref{RDS}, an agent can turn on the radio in the same 
+    By Lemma~\ref{RDS1}, an agent can turn on the radio in the same 
     slot with any other peer at least once during a period of $T_0$.
     The probability it detects a peer in a period of $T_0$ is at least
     $Pr \geq 1 - \frac{1}{2^{k-1}}$.
@@ -69,58 +69,70 @@ turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which c
     $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
     in total.    
 \end{IEEEproof}
+
 \vspace{0.1in}
-\begin{lemma}
-    \label{case}
-    An agent turns to the connecting stage will increase the probability that other
-    peers in the detecting stage to detect peers.
-\end{lemma}
-\begin{IEEEproof}
-    An agent in the detecting stage will transmit or listen in every first sub-slot 
-    which can help peers to detect it,
-    while it only turns on the radio a fraction of time in the detecting stage.
-\end{IEEEproof}
-   
-According to Lemma~\ref{dtoc} and \ref{case}, every agent will turn to the connecting stage in 
+
+By Lemma~\ref{dtoc}, every agent turns to connecting stage in 
 $O(\theta^{-2})$ slots with high probability. 
 
+\begin{remark}
+    An agent in connecting stage increases the probability that 
+    agents in detecting stage turn to connecting stage. This is because
+    An agent in detecting stage transmits or listens in every slots 
+    which increases the probability that its peers detect it.
+\end{remark}
+
+
+% \begin{lemma}
+%     \label{case}
+%     An agent in connecting stage increases the probability that 
+%     agents in detecting stage detect peers.
+% \end{lemma}
+% \begin{IEEEproof}
+%     An agent in detecting stage transmits or listens in every slots 
+%     which increases the probability that its peers detect it.
+% \end{IEEEproof}
+   
 \subsection{Time bound for connecting stage}
 \label{boundPC}
-Consider the $k$ agents all in the connecting stage.
+
+Consider $k$ agents all in connecting stage.
 We analyze the upper bound 
 for all the agents in the clique to transmit successfully.
-Note that, an agent transmitting successfully will be recorded by 
-all the other peers in the clique, and then it switches to the \emph{quiet} state. 
+Note that, an agent transmitting successfully is recorded by 
+all the other peers in the clique, and then it switches to the $quiet$ state. 
 
 Denote $S_t$ as the set of agents
-which have not switched to the \emph{quiet} state in slot $t$, and 
+which have not switched to the $quiet$ state in slot $t$, and 
 $|S_t|$ is the cardinality. 
 Thus the upper bound of the protocol is the maximum slots
 for a clique to turn to $|S_t| = 0$.
 
 In the following, we first show the
-upper bound of slots it takes from the beginning to $|S_t| \leq \log k$ in Lemma~\ref{fast}.
-Then we show the upper bound it takes to $|S_t| = 1$ in Lemma~\ref{slow}.
-Finally we present that it takes for all agents to successfully transmit~(i.e, $|S_t| = 0$.) in $O(k)$ 
+upper bound of slots from the beginning to $|S_t| \leq \log k$ in Lemma~\ref{fast}.
+Then we show the upper bound of slots from $|S_t| \leq \log k$ to $|S_t| = 1$ in Lemma~\ref{slow}.
+Finally, we present that all agents transmit beacons successfully (i.e, $|S_t| = 0$.) in $O(k)$ 
 in Lemma~\ref{one}. 
 
 \begin{lemma}
     \label{fast}
-    There exists $T_2=O(k)$ it holds with high probability that $|S_{T_2}| \leq \log k$. 
+    There exists $T_2=O(k)$ that $|S_{T_2}| \leq \log k$ with high probability. 
 \end{lemma}
 
 To prove this lemma, we need to introduce and prove some small lemmas at first.
 We review two useful lemmas as follows.
+
 \begin{lemma}
     \label{sumP}
-    Consider a set of $l$ agents, $u_1, u_2,\dots, u_l$.
-    For an agent $u_i$, it transmits with probability 
+    Consider a set of $l$ agents $u_1, u_2,\dots, u_l$.
+    For $i = 0, 1, \dots, l$, agent $u_i$ transmits with probability 
     $0 < \omega(u_i) < \frac{1}{2}$. Let $p_0$ denote the 
-    probability that the channel is idle in a slot; and $p_1$ denote 
+    probability that the channel is $idle$ in a slot and let $p_1$ denote 
     the probability that there is exactly one transmission in a slot.
-    Then $p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)\leq p_1 \leq
+    Thus, $p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)\leq p_1 \leq
     2\cdot p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)$     
 \end{lemma}
+
 \begin{lemma}
     \label{mulP}
     With $a_i \in [0, \frac{1}{2}]$ for $i = 0,1,\dots,$ it holds that
@@ -129,6 +141,7 @@ We review two useful lemmas as follows.
         4^{-{\sum}_{i}a_i}\leq {\prod}_{i}(1-a_i)\leq e^{-{\sum}_{i}a_i}. 
     \end{equation}
 \end{lemma}
+
 The proof of Lemma~\ref{sumP} can be referred to~\cite{Richa2010A}
 and the proof of Lemma~\ref{mulP} can be referred to~\cite{Daum2013Maximal}.
 Based on these two lemmas, we get the following conclusion.
@@ -138,21 +151,22 @@ Based on these two lemmas, we get the following conclusion.
     For a slot $T>0$ with $|S_t| \ge \log k$, if 
     there exist constants $\alpha_1, \alpha_2 \ge 1$ such that
     $\alpha_1 \leq \sum_{u\in S_t}{\omega}_t(u) \leq \alpha_2$, then with constant probability 
-    there is one active node switching to the \emph{quiet} state
+    there is one active node switching to the $quiet$ state
     in each slot. 
 \end{lemma}
 \begin{IEEEproof}
-    By Lemma~\ref{mulP} and~\ref{safe}, in each slot, the channel is idle with probability at least 
+    By Lemma~\ref{sumP} and~\ref{mulP}, in each slot, the channel is $idle$ with probability at least 
     $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
     with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
     it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
-    there are one agent switch to the quiet state in each slot.
+    there is one agent switch to the $quiet$ state in each slot.
 \end{IEEEproof}
 
-Next we show that after all the agents turn to the connecting stage, 
+Next we show that after all the agents turn to connecting stage, 
 the summation of the total agents' transmission probabilities will go
 between $\alpha_1$ and $\alpha_2$ soon, where $\alpha_1$ and $\alpha_2$
 are constants defined in Lemma~\ref{safe}.
+
 \begin{lemma}
     \label{lemma7}
     For a slot with ${\sum}_{u\in S_t}\omega_t(u)=\alpha$, it holds that
@@ -160,15 +174,18 @@ are constants defined in Lemma~\ref{safe}.
     \geq \frac{7}{8}$
     for large enough $\alpha$.
 \end{lemma}
+
+\vspace{0.1in}
+
 \begin{IEEEproof}
     The probability that there are more than one agents transmitting in slot 
     $t$ is at least $1-exp\{-\alpha\}$ according to Equation~(\ref{mul}).
     All the agents will halve their transmission probabilities if the channel is 
-    not idle in slot $t$. Denote X as the random variable that indicates the value of 
-    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u)$. We get,
+    not $idle$ in slot $t$. Denote X as the random variable that indicates the value of 
+    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u)$. We get
     \begin{equation*}
         Pr[X ={\sum}_{u\in S_t}\frac{\omega_t(u)}{2}] 
-        \geq 1 - exp\{-\alpha\}
+        \geq 1 - exp\{-\alpha\}, 
     \end{equation*}
     which is at least $7/8$ when $\alpha > 2.1$. Hence,
     \begin{equation*}
@@ -179,7 +196,7 @@ are constants defined in Lemma~\ref{safe}.
     Therefore, it holds with high probability that for large $\alpha$, $Pr[{\sum}_{u\in S_t}\omega_{t+1}(u) 
     \leq \alpha\cdot\frac{3}{4}] \geq \frac{7}{8}$.
     % Note that, 
-    % we did not consider the effect when an agent turns to the \emph{quiet} state,
+    % we did not consider the effect when an agent turns to the $quiet$ state,
     % which only makes the summation decrease and hence is not harmful. 
 \end{IEEEproof}
 
@@ -193,15 +210,15 @@ are constants defined in Lemma~\ref{safe}.
     with probability $1-O(k^{-1})$.
 \end{lemma}
 \begin{IEEEproof}
-    Let $T := \gamma\log k$, and $X_t$ be the random variable that indicates the value of 
+    Let $T := \gamma\log k$, and let $X_t$ denote the random variable that indicates the value of 
     ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u)$. Then
     by Lemma~\ref{lemma7}, it holds that $Pr[X_t \leq \frac{3}{4}] \geq \frac{7}{8}$.
-    Let $Y_t$ be the binary random variable that takes value $1$ if $X_t \leq \frac{3}{4}$.
+    Let $Y_t$ denote the binary random variable that takes value $1$ if $X_t \leq \frac{3}{4}$.
     Note that given ${\sum}_{u\in S_t}\omega_t(u) \geq \hat{\alpha_2}$, $E[Y_t] \geq \frac{7}{8}$
-    always hold. Hence, $E[\sum_{t=1}^{T}Y_t] \geq T\cdot\frac{7}{8}$, and it holds that
-    $Pr[\sum_{t=1}^{T}Y_t\leq T\cdot\frac{3}{4}]$ by the Chernoff bound. That is with probability 
+    always holds. Hence, $E[\sum_{t=1}^{T}Y_t] \geq T\cdot\frac{7}{8}$, and it holds that
+    $Pr[\sum_{t=1}^{T}Y_t\leq T\cdot\frac{3}{4}]$ by the Chernoff bound. Thus with probability 
     $1-O(k^{-1})$, there are at least $T\cdot\frac{3}{4}$ slots $t$ with 
-    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u) \leq 3/4$, which completes the proof. 
+    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u) \leq 3/4$. 
 \end{IEEEproof}
 
 
@@ -213,9 +230,10 @@ are constants defined in Lemma~\ref{safe}.
     is a slot $t$ with ${\sum}_{u\in S_t}\omega_t(u) \leq \hat{\alpha_2}$
     is $1-O(k^{-1})$.
 \end{lemma}
+
 \begin{IEEEproof}
-    Denote $T :=\gamma\log k$ and the period of $T$ starts from slot $t_0$.
-    By Lemma~\ref{lemma8}, with probability at least $1-O{n^{-1}}$, it holds that 
+    Denote $T :=\gamma\log k$ and assume the period of $T$ starts from slot $t_0$.
+    By Lemma~\ref{lemma8}, with probability at least $1-O(n^{-1})$, it holds that 
     \begin{align*}
         {\sum}_{u\in S_{t_0+T}}\omega_{t_0+T}(u)  &\geq 
         {\sum}_{u\in S_{t_0}}\omega_{t_0}(u)\cdot(\frac{3}{4}\cdot\frac{3}{4}
@@ -305,8 +323,8 @@ With Lemma~\ref{safe},~\ref{lemma7},~\ref{lemma8},~\ref{lemma9},~\ref{lemma10},~
 
 
 Then we show that when the number of agents not switching to 
-the \emph{quiet} state is less than $\log k$, the process accelerates to 
-only one agent not in \emph{quiet} state with high probability.
+the $quiet$ state is less than $\log k$, the process accelerates to 
+only one agent not in $quiet$ state with high probability.
 This is formulated as the following lemma.
 
 \begin{lemma}
@@ -324,13 +342,13 @@ This is formulated as the following lemma.
     Otherwise during the period from $T_2$ to $T_3$,
     with high probability there are 
     more than $\log k$ agents switching to
-    the \emph{quiet} state, which can not be possible.
+    the $quiet$ state, which can not be possible.
 \end{IEEEproof}
 
 Finally we need to prove the following lemma.
 \begin{lemma}
     \label{one}
-    For time $T_3$ when there is only one agent not switching to \emph{quiet} state,
+    For time $T_3$ when there is only one agent not switching to $quiet$ state,
     at time $T_4 := 2 \cdot T_3 + O(1) = O(k)$ it holds with high 
     probability that this agent successes to transmit.
 \end{lemma}
@@ -342,7 +360,7 @@ Finally we need to prove the following lemma.
     then with high probability there exist one slot in which agent $u$ successes to transmit.
 \end{IEEEproof}
 
-According to the Lemma~\ref{fast}, \ref{slow} and \ref{one},
+By Lemma~\ref{fast}, \ref{slow} and \ref{one},
 we get the upper bound $O(k)$ of {\pName} with respect to
 the clique size $k$. Note that, since the round of each agent may not be 
 synchronized, {\pName} requires an overlap of at least $T_4$ time 

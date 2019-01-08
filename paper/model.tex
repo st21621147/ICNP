@@ -2,20 +2,18 @@
 \label{sectionmodel}
 
 In this paper, we study the encounter registration problem in a wildlife 
-tracing system. We call individual animals as \emph{agents}, 
-and \emph{peers} are referred to as other agents that distinguish from 
-a specific one.
-The definition of the \emph{encounter process} is formulated as follows.
+tracing system. We call individual animals $agents$, 
+and $peers$ are referred to as other agents with respect to 
+a particular one.
+The definition of the encounter process is formulated as follows.
 \begin{definition}
 Encounter is defined as the process that 
 an agent detects and records other peer(s) if they keep a period of 
 close proximity $\Delta \leq D$
-in the wildlife tracking system. 
+in the wildlife tracking system, where $D$ is the range of radio tags. 
 \end{definition}
 
 In the following, we describe the system model in this paper.
-
-
 
 \subsection{Radio Communication Model}
 
@@ -23,47 +21,50 @@ In the following, we describe the system model in this paper.
 
 In the  wildlife tracing system {\sysname}, the encounter behavior  
 is a common biological phenomenon and
-happens when more than one agents gather closely, constituting a 
-single clique of size $k$~($k \geq 2$).
-Note that, $k$ is not known to each agent and the whole 
+happens when more than one agents gather closely
+These agents constitute a 
+single clique of size $k$~($k \geq 2$) and the whole 
 clique composes a sing-hop network for communication due to the proximity. 
 
 Each agent is equipped with a radio tag. 
 An agent that has its radio on can choose to be in the $transmit$ state
 or the $listen$ state:
 \begin{itemize}
-\item \textbf{Transmit state:} an agent transmits (broadcasts) 
-a message containing its ID on the channel;
-\item  \textbf{Listen state:} an agent listens on 
-the channel to receive messages from peers.
+    \item $Transmit$ state: an agent transmits (broadcasts) 
+    a message containing its ID on the channel;
+    \item $Listen$ state: an agent listens on 
+    the channel to receive messages from peers.
 \end{itemize}
-We also call an agent keeps in the \emph{listen} state for a period of consecutive slots 
-as \emph{quiet} state.
+We also call that an agent is in $quiet$ state if it 
+keeps in the $listen$ state for a period of consecutive slots. 
 
-Suppose time is divided into synchronized slots of equal 
+Time is divided into synchronized slots of equal 
 length $2\hat{t_0}$~\cite{Xu2005Lightweight, Sivrikaya2004Time}
 , where $\hat{t_0}$ is assumed to be sufficiently large to finish a complete
 communication process (one agent transmits a message including its ID and
 a peer receives the message).
 
 An agent transmits successfully in a time slot if and only if 
-it is the only one transmitting and all the other peer(s) will
-receive its message and record its ID in this single-hop network. Otherwise the channel is detected
-as \emph{idle} if there is no transmission and \emph{busy} if there 
+it is the only transmitting agent in the clique and then all the other peer(s) will
+receive its message and record its ID in this single-hop network. 
+Otherwise the channel is detected
+as $idle$ if there is no transmission and as $busy$ if there 
 are simultaneous messages incurring collisions on the channel.
 
 In the wildlife tracing system {\sysname}, 
 on the one hand,
 each agent is equipped with an energy-restricted tag;
-on the other hand, encounter process happens occasionally, and thus
+on the other hand, encounter process happens occasionally and thus
 it is a waste of battery energy if an agent turns on the radio while it does 
 not encounter with any peer(s) at the moment. 
 Therefore, in order to keep a balance between the energy consumption 
-and the efficiency of the encounter process, we introduce the duty cycle mechanism~\cite{Zhang2017Performance}.
+and the efficiency of the encounter process (as fast as possible to 
+record encountered peers), we introduce 
+the duty cycle mechanism~\cite{Zhang2017Performance}.
 
-\textbf{Duty cycle mechanism.} 
-An agent has the capability to turn off the radio to save
-energy for most of the time, and only be active 
+The key idea of duty cycle mechanism is that 
+an agent has the capability to turn off the radio to save
+energy for most of the time, and only to be active 
 (transmit or listen) during a fraction $\theta$ of the time.
 %, where $\theta$ is typically $1/100$ or less.
 
@@ -77,9 +78,9 @@ $$ s_i^t=\left\{
 \end{aligned}
 \right.
 $$
-\emph{Duty cycle} is defined as the fraction of time an agent turns its radio on, 
+Duty cycle is defined as the fraction of time an agent turns its radio on, 
 which is formulated as:
-$$\theta_i=\frac{|\{t: 0\leq t<t_0, s_i(t) \in \{Transimit,Listen\}\}|}{t_0}.
+$$\theta_i=\frac{|\{t: 0\leq t<t_0, s_i(t) \in \{Transmit,Listen\}\}|}{t_0}.
 $$
 
 % \subsection{Interference Model}
@@ -97,9 +98,6 @@ $$
 % is $D$ meters and an agent $u_i$ can discover its nearby peer $u_j$ 
 % in time slot $t$ if and only if $u_j$ is the only peer in $u_i$'s range 
 % that transmits and $u_i$ is listening in the slot.
-
-
-
 
 % Suppose the distance between two nodes $u_i$ and $u_j$ is $\Delta_{i,j}$.
 % The connectivity of the edge $e_{i,j}$ in the graph model is formulated as:
@@ -123,20 +121,19 @@ Next, we introduce another efficient technique called collision detection mechan
 This technique is carried out by the physical carrier sensing~\cite{Yang2005On}, which is part of 
 $802.11$ standard and provided by a Clear Channel Assessment (CCS) circuit.
 
-\textbf{Collision detection mechanism.}
-A listening agent can distinguish whether the channel is \emph{idle} or \emph{busy}, 
+Collision detection mechanism is that
+a listening agent can distinguish whether the channel is $idle$ or $busy$, 
 apart from successfully receiving a message. 
 
 \subsection{Problem formulation}
 
 We formulate the problem in this paper as follows.
 \begin{problem}
-    Consider $\hat{T}$ slots which is a small enough period in reality.
-    We define an encounter registration problem as to design a protocol to guarantee 
+    Encounter registration problem is defined to design a protocol to guarantee 
     all the agents in the clique can receive message from each other at least once 
-    if they encounter for at least $\hat{T}$ time slots and record the encounter process. 
+    if they encounter for at least $\hat{T}$ time slots and record the encounter process,
+    where $\hat{T}$ slots are a small enough period in reality. 
 \end{problem}
-
 
 We look into the problem and find the key challenge is 
 the uncertainty of dynamic movements

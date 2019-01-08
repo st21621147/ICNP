@@ -1,10 +1,11 @@
 \section{Introduction}
 
-Collecting detailed information about wild animals~\cite{Prangle2006NewRadiocolars,Rutz2012AutomatedMapping} 
+Collecting detailed information about wild 
+animals~\cite{Prangle2006NewRadiocolars,Rutz2012AutomatedMapping} 
 remains a significant technical challenge that
 limits the ability of ecologists to study the interactions between wildlife and their environment. 
 One tool that emerged a little over a decade ago
-and has been gaining significance is 
+and that has been gaining significance is 
 {\em encounter detection and logging}~\cite{Tentelier2016FishNetwork,
 Bohm2009WildlifeLivestock,Ripperger2016ProximitySensing}.
 
@@ -14,14 +15,14 @@ consisting of radio devices called {\em tags} attached to wild
 animals (and sometimes also to fixed positions and livestock), as depicted in Fig.~\ref{tags}. 
 The radios transmit identification
 packets periodically and listen to such packets from other tags,
-recording data about received packets in persistent memory in the tag. The
+recording data about received packets in persistent memory in the tags. The
 radios are typically configured for short-range communication by using low transmitting power and by 
 using high data-rates (both limit the signal-to-noise ratio at the receiver). Since the radios
 are configured for short-range communication, receiving a packet implies the transmitting tag is
 in close proximity to the receiving tag. Recent systems record each packet with received signal strength
 indication (RSSI)~\cite{Daiya2011Experimental}, helping to estimate the distance between the transmitter and receiver.
 This is the main goal of these systems: to log close-proximity
-events between two or more animals. The logs are downloaded either by physically retrieving the tags,
+events between two or more animals. The logs are downloaded either by physically retrieving the tags 
 or by remotely downloading to base-stations placed in locations that the animals pass by frequently.
 
 Such systems have gained popularity among ecologists because 
@@ -44,10 +45,11 @@ events in the life of animals: mating, predation, disseminating diseases, etc.
 Unfortunately, there is no robust encounter registration protocol 
 for tag radios to transmit and receive packets efficiently.
 Worse, existing protocols for relevant problems (e.g., neighbor discovery problem~\cite{Bakht2012Searchlight}) 
-fail because high efficiency (when an encounter happens)
-and low-energy consumption (when there is no encounter) 
-can be mutually exclusive.
-The key challenge is the uncertain mobility and herd characteristics of wild 
+% fail because high efficiency (when an encounter happens)
+% and low-energy consumption (when there is no encounter) 
+% can be mutually exclusive.
+% The key challenge is 
+fail due to the uncertain mobility and herd characteristics of wild 
 animals. There is variability among species in their movement and 
 interaction behavior. 
 This issue adds a great deal of difficulties to
@@ -99,11 +101,11 @@ In this paper, we propose a robust protocol for encounter registration,
 addressing these problems mentioned above systematically and
 methodically. In our protocol, we design two stages for the tags, 
 namely detecting stage and connecting stage.
-In the detecting stage, a tag works a fraction of time in order to save energy,
+In detecting stage, a tag works a fraction of time in order to save energy,
 and transmits a beacon periodically to detect whether an encounter is happening at the moment.
-When detected an acknowledgement, the tag switches to the connecting stage and increases the 
+When detected an acknowledgement, the tag switches to connecting stage and increases the 
 transmission frequency in order to establish links with other tags. To deal with interference 
-happening in the connecting stage,
+happening in connecting stage,
 a tag adaptively adjusts its transmitting probability: it increases the probability when 
 the channel is detected idle and reduces the probability when interference is detected.  
 
@@ -119,7 +121,7 @@ compared to baseline methods, our protocol has better performance, regarding thr
 %The results also show the potential of applicability in various wireless mobile networks.
 \end{itemize}
 
-Our protocol can be widely applied to various wireless mobile networks, （e.g.， mobile Ad hoc network management.）
+Our protocol can be widely applied to various wireless mobile networks, (e.g., mobile Ad hoc network management.)
 
 
 %% Remaining structure

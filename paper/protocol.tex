@@ -7,46 +7,46 @@ The pseudo-code of the protocol is given in Algorithm~\ref{DA} and Algorithm~\re
 
 The protocol consists of two stages: detecting stage and connecting stage. 
 \begin{itemize}
-    \item \textbf{Stage 1: detecting stage.} In this stage, an agent attempts to
+    \item Stage 1: detecting stage. In this stage, an agent attempts to
     detect whether there are nearby peers, regardless of who they are. 
-    \item \textbf{Stage 2: connecting stage} In this stage, an agent attempts to 
+    \item Stage 2: connecting stage. In this stage, an agent attempts to 
     identify nearby peer(s) and record their IDs to its log.
 \end{itemize}
 
-Initially, each agent starts from the detecting stage. 
-In the detecting stage, an agent turns its radio to the $sleep$ state most of the time,
+Initially, each agent starts from detecting stage. 
+In detecting stage, an agent turns its radio to the $sleep$ state most of the time,
 and switches to $transmit$ state or $listen$ state at intervals.
-In the connecting stage, agents only switch between $transmit$ state 
+In connecting stage, agents only switch between $transmit$ state 
 and $listen$ state.
 
 The key idea of {\pName} is that, any single agent keeps in detecting 
 stage to reduce ineffective energy consumption. When encounter happens, 
-it detects the existence of nearby peers and turns to the connecting stage 
+it detects the existence of nearby peers and turns to connecting stage 
 to identify those peers (or a peer) as fast as possible, and record the encounter process to its log. 
-when the encounter process is determined to be finished in the connecting stage, 
-the agent turns back to the detecting stage.
+When the encounter process is detected to be finished in connecting stage, 
+the agent turns back to detecting stage.
 
-\begin{remark}
-    In {\pName}, there is no need to synchronize the stage between agents and
-    {\pName} still works when encounter peers are in different stage, e.g., an agent in detecting 
-    stage comes into a stable clique in connecting stage. 
-    The proof of correctness will be presented 
-    in section~\ref{proof}. 
-\end{remark}
+% \begin{remark}
+%     In {\pName}, there is no need to synchronize the stage between agents and
+%     {\pName} still works when encounter peers are in different stages, e.g., an agent in detecting 
+%     stage comes into a stable clique in connecting stage. 
+%     The proof of correctness will be presented 
+%     in section~\ref{proof}. 
+% \end{remark}
 
 In the following, we describe the operations of these two stages in detail. 
 
 \subsection{Detecting stage}
 
-In the detecting stage,  
-energy efficiency is achieved by the duty cycle mechanism, 
-e.g., denote the predefined duty cycle for 
-all the agents is $\theta$, the tag radio of each agent will work
+In detecting stage,  
+energy efficiency is achieved by the duty cycle mechanism. 
+Denote the predefined duty cycle for 
+all the agents by $\theta$. The radio tag of each agent works
 $\theta T_0$ slots in every period of $T_0$ slots. 
 
-However, it is ineffective
-when two agents encounter and one is in $sleep$ state while the other is transmitting
-or listening. 
+However, it is ineffective that
+during an encounter process one agent is transmitting
+or listening while its peers is in $sleep$ state. 
 To technically achieve synchronizing the time that agents turn on the radio without extra cost,
 we introduce the technique of Relax Difference Set (RDS)~\cite{luk1997two}.
 We use the RDS technique to guarantee every encounter pair 
@@ -73,7 +73,7 @@ where $a_i,a_j \in D$.
 \end{figure}
 
 We now give an example to explain how RDS works to help synchronization.
-Suppose the duty cycle is set as $0.4$, i.e., there are $4$ active slots 
+Suppose the duty cycle is set to $0.4$, i.e., there are $4$ active slots 
 in every $10$ slots. It is easy to show that $R=\{1,2,3,6\}$ is a RDS
 under $Z_{10}$:
 \begin{align*}
@@ -84,69 +84,63 @@ In every period of ten slots, for any $i = \{0,1,\dots,9\}$, if $i \in R$, then
 the agent turns on its radio in the $i^{th}$ slot in this period; otherwise it turns off the 
 radio to the $sleep$ state. An example is depicted in Figure~\ref{exampleRDS}. 
 
+% \begin{algorithm}[!h]
+%     \caption{RDS Construction Algorithm}
+%     \label{RDS}
+%     \begin{algorithmic}[1]
+%     \STATE $R :=\emptyset$; $\lambda :=\lceil \sqrt{N}  \rceil$,
+%     $\mu :=\lceil \frac{\lceil \sqrt{N} \rceil}{2} \rceil$;\label{RDSline1}
+%     \FOR{$i = 1 :\lambda$}
+%         \STATE $R :=R \cup i$; \label{RDSline2}
+%     \ENDFOR
+%     \FOR{$j = 1 :\mu$}
+%         \STATE $R :=R \cup (1 + j * \lambda )$; \label{RDSline3}
+%     \ENDFOR
+%     \end{algorithmic}
+% \end{algorithm}
 
+% We show the correctness of the construction formally.
+% %The correctness proof of the construction
+% \begin{lemma}
+% \label{RDS1}
+% Set $R = \{r_0, r_1, ..., r_{\lambda + \mu - 1}\}$ constructed in Alg. \ref{RDS} is a RDS,
+% where $|R| = \lambda + \mu = \lceil \sqrt{T_0}  \rceil + \lceil \frac{\lceil \sqrt{T_0} \rceil}{2} \rceil
+% \approx \lceil \frac{3\sqrt{T_0}}{2}  \rceil$.
+% \end{lemma}
+% \begin{IEEEproof}
+% Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $T_0$),
+% an opposing pair $(a_j,a_i)$ exists such that
+% $a_j - a_i \equiv (T_0-d)$ (mod $T_0$). Thus we only need to find
+% at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor T_0/2 \rfloor]$.
 
-\begin{algorithm}[!h]
-    \caption{RDS Construction Algorithm}
-    \label{RDS}
-    \begin{algorithmic}[1]
-    \STATE $R :=\emptyset$; $\lambda :=\lceil \sqrt{N}  \rceil$,
-    $\mu :=\lceil \frac{\lceil \sqrt{N} \rceil}{2} \rceil$;\label{RDSline1}
-    \FOR{$i = 1 :\lambda$}
-        \STATE $R :=R \cup i$; \label{RDSline2}
-    \ENDFOR
-    \FOR{$j = 1 :\mu$}
-        \STATE $R :=R \cup (1 + j * \lambda )$; \label{RDSline3}
-    \ENDFOR
-    \end{algorithmic}
-\end{algorithm}
+% In the construction, $\lambda$ in Line \ref{RDSline1} is the smallest integer satisfying
+% $\lambda^2 \geq T_0$. Every $d$ in range $[1, \lfloor T_0/2 \rfloor]$
+% can be represented as: $ d = 1 + j \times \lambda - i$, where $1 \leq j \leq \mu,
+% 1 \leq i \leq \lambda$. Thus, there exists $a_j = 1 + j \times \lambda$
+% from Line. \ref{RDSline2} and $a_i = i$ from Line. \ref{RDSline3}
+% satisfying  $a_j - a_i \equiv d$. Then, the lemma holds.
+% \end{IEEEproof}
 
-It has been proved that any RDS must have cardinality $|R| \geq \sqrt{N}$\cite{luk1997two}.
-We present a linear algorithm to construct a RDS with 
-cardinality $\lceil \frac{3\sqrt{T_0}}{2}  \rceil$ under $Z_{T_0}$ in Alg. \ref{RDS}.
-
-We show the correctness of the construction formally.
-%The correctness proof of the construction
-\begin{lemma}
-\label{RDS1}
-Set $R = \{r_0, r_1, ..., r_{\lambda + \mu - 1}\}$ constructed in Alg. \ref{RDS} is a RDS,
-where $|R| = \lambda + \mu = \lceil \sqrt{T_0}  \rceil + \lceil \frac{\lceil \sqrt{T_0} \rceil}{2} \rceil
-\approx \lceil \frac{3\sqrt{T_0}}{2}  \rceil$.
-\end{lemma}
-\begin{IEEEproof}
-Obviously, if there exists one ordered pair $(a_i,a_j)$ satisfying  $a_i - a_j \equiv d$ (mod $T_0$),
-an opposing pair $(a_j,a_i)$ exists such that
-$a_j - a_i \equiv (T_0-d)$ (mod $T_0$). Thus we only need to find
-at least one ordered pair $(a_i,a_j)$ for each $d \in [1, \lfloor T_0/2 \rfloor]$.
-
-In the construction, $\lambda$ in Line \ref{RDSline1} is the smallest integer satisfying
-$\lambda^2 \geq T_0$. Every $d$ in range $[1, \lfloor T_0/2 \rfloor]$
-can be represented as: $ d = 1 + j \times \lambda - i$, where $1 \leq j \leq \mu,
-1 \leq i \leq \lambda$. Thus, there exists $a_j = 1 + j \times \lambda$
-from Line. \ref{RDSline2} and $a_i = i$ from Line. \ref{RDSline3}
-satisfying  $a_j - a_i \equiv d$. Then, the lemma holds.
-\end{IEEEproof}
-
-\begin{algorithm}[!h]
+\begin{algorithm}[t]
     \caption{Detecting Algorithm}
     \label{DA}
     \begin{algorithmic}[1]
     \STATE $T_0 := \lceil \frac{9}{4\theta^{2}} \rceil$; $\omega_0 :=\frac{1}{2}$; $t := 0$;
-    \STATE Invoke Alg.~\ref{RDS} to construct $R = \{r_0, r_1, ...,r_{\lceil 
+    \STATE Construct RDS: $R = \{r_0, r_1, ...,r_{\lceil 
     \frac{3\sqrt{T_0}}{2}  \rceil}\}$ under $Z_{T_0}$;
     \WHILE {$True$}
         \IF{$(t + 1) \in R$}  \label{On}
-            \STATE \textbf{\emph{In the first sub-slot:}}
+            \STATE In the first sub-slot:
             \STATE Transmit a beacon with probability $\omega_0$
             and listen with probability $1-\omega_0$;
-            \STATE \textbf{\emph{In the second sub-slot:}}
+            \STATE In the second sub-slot:
             \IF{the agent is in $listen$ state in the first sub-slot}
                 \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~the~first~sub-slot}
-                    \STATE Transmit a beacon and turn to the \textbf{connecting stage};
+                    \STATE Transmit a beacon and turn to connecting stage;
                 \ENDIF
             \ELSE
                 \IF{detects~energy~(a~beacon~or~a~collision~by~multiple~beacons)~in~this~sub-slot}
-                    \STATE Turn to the \textbf{connecting stage};
+                    \STATE Turn to connecting stage;
                 \ENDIF
             \ENDIF
         \ELSE
@@ -157,9 +151,12 @@ satisfying  $a_j - a_i \equiv d$. Then, the lemma holds.
     \end{algorithmic}
 \end{algorithm}
 
-Based on the RDS, we present the operations in the detecting stage, as depicted in Alg.~\ref{DA}.
+Based on the RDS, we present the operations in detecting stage, as depicted in Alg.~\ref{DA}.
+It has been proved that any RDS must have cardinality $|R| \geq \sqrt{N}$\cite{luk1997two}.
+In our proposed protocol, we construct a RDS with cardinality $\lceil \frac{3\sqrt{T_0}}{2}  
+\rceil$ under $Z_{T_0}$.
 Agents turn on and off the radio according to the RDS sequence.
-Consider a slot the radio is on, and then the slot is divided into two sub-slots. In the first sub-slot
+Consider a slot the radio is on. Then the slot is divided into two sub-slots. In the first sub-slot
 an agent transmits a beacon with probability $\omega_0$ and listens with probability $(1-\omega_0)$.
 In the second sub-slot: 
 \begin{itemize}
@@ -167,19 +164,19 @@ In the second sub-slot:
     \begin{itemize}
     \item if the agent detects a beacon (or beacons) in the first sub-slot, it 
     transmits a beacon (a bit is OK) as an acknowledgement 
-    on the channel in the second sub-slot and turn to the 
+    on the channel in the second sub-slot and turns to 
     connecting stage; otherwise it does nothing. 
     \end{itemize}
     \item[2)] The agent is in $transmit$ state in the first sub-slot:
     \begin{itemize}
     \item if the agent detects a beacon (or beacons) in this sub-slot,
-    it turns to the connecting stage; otherwise it does nothing.
+    it turns to connecting stage; otherwise it does nothing.
     \end{itemize}
 \end{itemize}
 
 As discussed before, the aim of this stage is to detect nearby peer(s) as fast as possible 
-(if exists), and either successful transmission or detecting busy on the channel activates the agent
-to switch to the connecting stage. %Hence we fix the transmitting probability as $\omega_0 = \frac{1}{2}$. 
+(if exists), and either successful transmission or detecting $busy$ on the channel activates the agent
+to switch to connecting stage. %Hence we fix the transmitting probability as $\omega_0 = \frac{1}{2}$. 
 
 % \begin{remark}
 %     Though $\omega_0 = \frac{1}{2}$ is not the optimal probability in multi-agent encounter cases, 
@@ -190,22 +187,22 @@ to switch to the connecting stage. %Hence we fix the transmitting probability as
 
 \subsection{Connecting stage}
 
-In the connecting stage, agents attempt to identify the nearby 
-peers and record the encounter process%~(messages containing peers' IDs) 
+In connecting stage, agents attempt to identify the nearby 
+peers and record the encounter process %~(messages containing peers' IDs) 
 to its local log.
 % A successful identification happens only if the agent is listening
 % and only one peer is transmitting. 
 
-\begin{algorithm}[ht]
+\begin{algorithm}[t]
     \caption{Connecting Algorithm}
     \label{CA}
     \begin{algorithmic}[1]
     \STATE $t := 0$; $\omega_t := \zeta$; 
     \WHILE {$True$}
-        \STATE \textbf{\emph{In the first sub-slot:}}
+        \STATE In the first sub-slot:
         \STATE Transmit a message containing ID with probability $\omega_t$
         and listen with probability $1-\omega_t$;
-        \STATE \textbf{\emph{In the second sub-slot:}}
+        \STATE In the second sub-slot:
         \IF{the agent is in $listen$ state in the first sub-slot}
             \IF{reveive a message successfully}
                 \STATE Record the source ID and transmit a beacon;
@@ -225,7 +222,7 @@ to its local log.
         \STATE $t := (t + 1)$;
         \IF{$t == \hat{T}$}
             \IF{no peer is found in this round}
-                \STATE Turn to the \textbf{detecting stage}; \label{backDS}
+                \STATE Turn to detecting stage; \label{backDS}
             \ELSE
                 \STATE $t := 0$; $\omega_t := \zeta$;
             \ENDIF
@@ -242,10 +239,10 @@ to its local log.
 % and thus they take measures to reduce the collisions if not successful.
 
 In this stage, pre-defined $\hat{T}$ slots consists of a round. 
-The transmitting probability is initially set as $\zeta$, 
+The transmitting probability is initially set to $\zeta$, 
 which is a pre-defined constant. Each agent repeats the 
 operations in Alg.~\ref{CA} round by round and 
-it turns to the detecting stage when it cannot 
+an agent turns to detecting stage if it cannot 
 find any peer in a complete round.
 %as the operation in Line~\ref{backDS}. 
 
@@ -266,7 +263,7 @@ find any peer in a complete round.
 
 Each slot is divided into two sub-slots.
 In the first sub-slot of each slot $t$, an agent transmits a message containing ID 
-with probability $\omega_t$ and listen with probability $(1 - \omega_t)$. 
+with probability $\omega_t$ and listens with probability $(1 - \omega_t)$. 
 In the second sub-slot: 
 \begin{itemize}
     \item[1)] The agent is in $listen$ state in the first sub-slot:
@@ -275,8 +272,7 @@ In the second sub-slot:
     decodes and records the source ID in the message, and
     transmits a beacon (a bit is OK) as an acknowledgement 
     on the channel in the second sub-slot. 
-    \item if the channel is idle, this means there is a chance to 
-    transmit successfully and it multiplies its transmitting 
+    \item if the channel is detected as $idle$, the agent multiplies its transmitting 
     probability by a factor $(1+\epsilon)$ (no larger than the pre-defined constant $\zeta$).
     \item if the agent detects collisions, it divides its transmission 
     probability by a factor ${(1+\epsilon)}$. 
@@ -284,11 +280,10 @@ In the second sub-slot:
     \item[2)] The agent is in $transmit$ state in the first sub-slot:
     \begin{itemize}
     \item if the agent detects beacons in this sub-slot,
-    this means its previous message has been successfully received by its nearby
-    peers, and it keeps listening in all the rest first sub-slots of this round,
-    which is called \emph{quiet} state.
-    \item if the agent detects nothing in this sub-slot, it means its previous message
-    failed to propagate due to simultaneous transmissions. Thus it divides its transmitting 
+    its previous message has been successfully received by its nearby
+    peers. Thus the agent keeps in $quiet$ state until the end of this round.
+    \item if the agent detects nothing in this sub-slot, its previous message
+    failed to propagate due to simultaneous transmissions. Thus the agent divides its transmitting 
     probability by a factor ${(1+\epsilon)}$. 
     \end{itemize}
 \end{itemize}
@@ -296,98 +291,99 @@ In the second sub-slot:
 Factor ${(1+\epsilon)}$ is a pre-defined constant to adjust the transmitting probability adaptively.
 % For simplify, we set $(1+\epsilon) := 2$ for analysis in the next section.
 In the end of a complete round, if there is no peer detected in this whole round, 
-which indicates the encounter process is finished, the agent turns to the detecting stage .
+%which indicates the encounter process is finished, 
+the agent turns to detecting stage.
 
-\subsection{Analysis of the protocol}
-\label{proof}
+% \subsection{Analysis of the protocol}
+% \label{proof}
 
-When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
-We derive this conclusion from the following three lemmas.
+% When an encounter happens, an agent in detecting stage will switch to connecting stage very soon. 
+% We derive this conclusion from the following three lemmas.
 
-\begin{lemma}
-    \label{RDS_lem}
-    Consider any two agents $u_i$ and $u_j$ in detecting stage.
-    In each period $T_0$, they will turn on the radio in the same slot at least once.
-\end{lemma}
-\begin{IEEEproof}
-Assume the time drift between $u_i$ and $u_j$ is $\delta_{ij}$ (mod $T_0$).
-In the RDS constructed under $T_0$, there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv \delta_{ij}$ (mod $T_0$).
-Thus the $a_i^{th}$ slot in a period of $u_i$ is exactly the $a_j^{th}$ slot in a period of $a_j^{th}$ and both of them
-turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which completes the proof.
-\end{IEEEproof}
+% \begin{lemma}
+%     \label{RDS_lem}
+%     Consider any two agents $u_i$ and $u_j$ in detecting stage.
+%     In each period $T_0$, they will turn on the radio in the same slot at least once.
+% \end{lemma}
+% \begin{IEEEproof}
+% Assume the time drift between $u_i$ and $u_j$ is $\delta_{ij}$ (mod $T_0$).
+% In the RDS constructed under $T_0$, there exists at least one ordered pair $(a_i,a_j)$ such that $a_i - a_j \equiv \delta_{ij}$ (mod $T_0$).
+% Thus the $a_i^{th}$ slot in a period of $u_i$ is exactly the $a_j^{th}$ slot in a period of $a_j^{th}$ and both of them
+% turn on the radio in this slot according to Alg.~\ref{DA} Line~\ref{On}, which completes the proof.
+% \end{IEEEproof}
 
-\begin{lemma}
-    \label{dtoc}
-    Consider $k$ agents all in the detecting stage at the beginning.
-    Given a small enough constant $\eta$, 
-    an agent in detecting stage will turn to the connecting stage in 
-    $O(\theta^{-2})$ slots with high probability.
-\end{lemma}
-\begin{IEEEproof}
-    By Lemma~\ref{RDS_lem}, an agent can turn on the radio in the same 
-    slot with any other peer at least once during a period of $T_0$.
-    The probability it detects a peer in a period of $T_0$ is at least
-    $Pr \geq 1 - \frac{1}{2^{k-1}}$.
-    Hence given a small enough constant $\eta$,  
-    it holds with high probability that an agent will turn to connecting stage in 
-    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}}$ periods, which is 
-    $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
-    in total.    
-\end{IEEEproof}
-\vspace{0.1in}
-\begin{lemma}
-    \label{case}
-    An agent turns to the connecting stage will increase the probability that other
-    peers in the detecting stage to detect peers.
-\end{lemma}
-\begin{IEEEproof}
-    An agent in the detecting stage will transmit or listen in every first sub-slot 
-    which can help peers to detect it,
-    while it only turns on the radio a fraction of time in the detecting stage.
-\end{IEEEproof}
+% \begin{lemma}
+%     \label{dtoc}
+%     Consider $k$ agents all in the detecting stage at the beginning.
+%     Given a small enough constant $\eta$, 
+%     an agent in detecting stage will turn to the connecting stage in 
+%     $O(\theta^{-2})$ slots with high probability.
+% \end{lemma}
+% \begin{IEEEproof}
+%     By Lemma~\ref{RDS_lem}, an agent can turn on the radio in the same 
+%     slot with any other peer at least once during a period of $T_0$.
+%     The probability it detects a peer in a period of $T_0$ is at least
+%     $Pr \geq 1 - \frac{1}{2^{k-1}}$.
+%     Hence given a small enough constant $\eta$,  
+%     it holds with high probability that an agent will turn to connecting stage in 
+%     $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}}$ periods, which is 
+%     $\frac{\ln\eta}{\ln\frac{1}{2^{k-1}}} \lceil \frac{9}{4\theta^{2}} \rceil$ slots
+%     in total.    
+% \end{IEEEproof}
+% \vspace{0.1in}
+% \begin{lemma}
+%     \label{case}
+%     An agent turns to the connecting stage will increase the probability that other
+%     peers in the detecting stage to detect peers.
+% \end{lemma}
+% \begin{IEEEproof}
+%     An agent in the detecting stage will transmit or listen in every first sub-slot 
+%     which can help peers to detect it,
+%     while it only turns on the radio a fraction of time in the detecting stage.
+% \end{IEEEproof}
    
-According to Lemma~\ref{dtoc} and \ref{case}, every agent will turn to the connecting stage in 
-$O(\theta^{-2})$ slots with high probability. 
+% According to Lemma~\ref{dtoc} and \ref{case}, every agent will turn to the connecting stage in 
+% $O(\theta^{-2})$ slots with high probability. 
 
-Next, we prove that with constant probability,
-there are one agent switch to the quiet state in each slot.
+% Next, we prove that with constant probability,
+% there are one agent switch to the quiet state in each slot.
 
-\begin{lemma}
-    \label{sumP}
-    Consider a set of $l$ agents, $u_1, u_2,\dots, u_l$.
-    For an agent $u_i$, it transmits with probability 
-    $0 < \omega(u_i) < \frac{1}{2}$. Let $p_0$ denote the 
-    probability that the channel is idle in a slot; and $p_1$ denote 
-    the probability that there is exactly one transmission in a slot.
-    Then $p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)\leq p_1 \leq
-    2\cdot p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)$     
-\end{lemma}
+% \begin{lemma}
+%     \label{sumP}
+%     Consider a set of $l$ agents, $u_1, u_2,\dots, u_l$.
+%     For an agent $u_i$, it transmits with probability 
+%     $0 < \omega(u_i) < \frac{1}{2}$. Let $p_0$ denote the 
+%     probability that the channel is idle in a slot; and $p_1$ denotes 
+%     the probability that there is exactly one transmission in a slot.
+%     Then $p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)\leq p_1 \leq
+%     2\cdot p_0\cdot {\sum}_{i=1}^{l}\omega(u_i)$     
+% \end{lemma}
 
-\begin{lemma}
-    \label{mulP}
-    With $a_i \in [0, \frac{1}{2}]$ for $i = 0,1,\dots,$ it holds that
-    \begin{equation}
-        \label{mul}
-        4^{-{\sum}_{i}a_i}\leq {\prod}_{i}(1-a_i)\leq e^{-{\sum}_{i}a_i}. 
-    \end{equation}
-\end{lemma}
+% \begin{lemma}
+%     \label{mulP}
+%     With $a_i \in [0, \frac{1}{2}]$ for $i = 0,1,\dots,$ it holds that
+%     \begin{equation}
+%         \label{mul}
+%         4^{-{\sum}_{i}a_i}\leq {\prod}_{i}(1-a_i)\leq e^{-{\sum}_{i}a_i}. 
+%     \end{equation}
+% \end{lemma}
 
-The proof of Lemma~\ref{sumP} and Lemma~\ref{mulP}
-are omitted here; inspirations are drawn from \cite{Richa2010A} 
-and \cite{Daum2013Maximal}.
+% The proof of Lemma~\ref{sumP} and Lemma~\ref{mulP}
+% are omitted here; inspirations are drawn from \cite{Richa2010A} 
+% and \cite{Daum2013Maximal}.
 
-\begin{lemma}
-    \label{safe}
-    For a slot $T>0$ with $|S_t| \ge \log k$, if 
-    there exist constants $\alpha_1, \alpha_2 \ge 1$ such that
-    $\alpha_1 \leq \sum_{u\in S_t}{\omega}_t(u) \leq \alpha_2$, then with constant probability 
-    there is one active node switching to the \emph{quiet} state
-    in each slot. 
-\end{lemma}
-\begin{IEEEproof}
-    By Lemma~\ref{mulP} and~\ref{mulP}, in each slot, the channel is idle with probability at least 
-    $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
-    with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
-    it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
-    there are one agent switch to the quiet state in each slot.
-\end{IEEEproof}
+% \begin{lemma}
+%     \label{safe}
+%     For a slot $T>0$ with $|S_t| \ge \log k$, if 
+%     there exist constants $\alpha_1, \alpha_2 \ge 1$ such that
+%     $\alpha_1 \leq \sum_{u\in S_t}{\omega}_t(u) \leq \alpha_2$, then with constant probability 
+%     there is one active node switching to the $quiet$ state
+%     in each slot. 
+% \end{lemma}
+% \begin{IEEEproof}
+%     By Lemma~\ref{mulP} and~\ref{mulP}, in each slot, the channel is idle with probability at least 
+%     $4^{-2\alpha_2}$, and there is exactly one transmission on the channel
+%     with probability at least $\alpha_1\cdot 4^{-2\alpha_2}$. Thus, 
+%     it holds that with constant probability (given $\alpha_1$ and $\alpha_2$),
+%     there are one agent switch to the quiet state in each slot.
+% \end{IEEEproof}
