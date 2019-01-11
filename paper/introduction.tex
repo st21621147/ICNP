@@ -44,42 +44,53 @@ events in the life of animals: mating, predation, disseminating diseases, etc.
 
 Unfortunately, there is no robust encounter registration protocol 
 for tag radios to transmit and receive packets efficiently.
-Worse, existing protocols for relevant problems (e.g., neighbor discovery problem~\cite{Bakht2012Searchlight}) 
+Worse, existing protocols for relevant problems, 
+such as neighbor discovery problem~\cite{Bakht2012Searchlight}, are not effective.
 % fail because high efficiency (when an encounter happens)
 % and low-energy consumption (when there is no encounter) 
 % can be mutually exclusive.
 % The key challenge is 
-fail due to the uncertain mobility and herd characteristics of wild 
-animals. There is variability among species in their movement and 
-interaction behavior. 
-This issue adds a great deal of difficulties to
-solve two challenging protocol-related problems. 
-One problem is to minimize the power used for listening to other tags. 
-All of the systems developed so far use low-power integrated
-UHF transceivers, and the power consumed by these while receiving is 
-comparable to the power that they use to transmit. 
-The other protocol-related problem is interference. 
-If many tags transmit simultaneously, receiving tags may fail
-to reconstruct valid packets. 
+This is because sensors in wireless sensor networks are deployed for sure that there 
+are neighbors around for them to discover (so as to construct a network).
+However, in a wildlife tracing system,
+tags are supposed to identify whether there are any other tags nearby 
+(i.e., whether an encounter really happens).
+If a tag keeps looking for other tags when there is no encounter at all,
+it is a great waste of battery energy, given that all of the tags developed so far use low-power integrated
+UHF transceivers. 
+Besides, tags are also supposed to identify whether the detected encounter is finished,
+(i.e., animals move away from each other).
+Moreover, many species of animals, including many species of
+birds and bats, roost together, so encounters of tens or hundreds 
+of individuals are not necessarily rare.
+% due to the uncertain mobility and herd characteristics of wild 
+% animals. There is variability among species in their movement and 
+% interaction behavior. 
+% This issue adds a great deal of difficulties to
+% solve two challenging protocol-related problems. 
+% One problem is to minimize the power used for listening to other tags. 
+% , and the power consumed by these while receiving is 
+% comparable to the power that they use to transmit. 
+% The other protocol-related problem is interference. 
+% If many tags transmit simultaneously, receiving tags may fail
+% to reconstruct valid packets. 
 % Paradoxically, highly-efficient 
 % systems with good time synchronization and short activity
 % periods suffer more from this problem than less efficient systems 
 % in which the clocks of tags are not synchronized tightly
 % enough to transmit simultaneously. 
-Many species of animals, including many species of
-birds and bats, roost together, so encounters of tens or hundreds 
-of individuals are not necessarily rare.
 
-Our fundamental observation is that it is a waste of 
-energy if an animal is not encountering with others
-while still keeps the tag working frequently.
-Thus it is reasonable for a tag to
-increase the working frequency of its radio when 
-encounter happens; otherwise it keeps
-the radio in a low-power mode. 
-To handle this issue while taking the uncertain mobility of animals into account, 
-the dominant strategy in this paper is to design a mechanism
-to identify the existence of an encounter in real-time. 
+
+% Our fundamental observation is that it is a waste of 
+% energy if an animal is not encountering with others
+% while still keeps the tag working frequently.
+% Thus it is reasonable for a tag to
+% increase the working frequency of its radio when 
+% encounter happens; otherwise it keeps
+% the radio in a low-power mode. 
+% To handle this issue while taking the uncertain mobility of animals into account, 
+% the dominant strategy in this paper is to design a mechanism
+% to identify the existence of an encounter in real-time. 
 
 % The  strategy to address this issue appears to be duty-cycling the 
 % receiver~\cite{Zhang2017Performance}, so that it is
@@ -97,9 +108,12 @@ to identify the existence of an encounter in real-time.
 % exclude them from most of the discussion; we do comment on 
 % them in Section~\ref{sec:related-work}.
 
-In this paper, we propose a robust protocol for encounter registration, 
+In this paper, we propose a distributed protocol for encounter registration, 
 addressing these problems mentioned above systematically and
-methodically. In our protocol, we design two stages for the tags, 
+methodically. 
+The key strategy in the protocol is to design a mechanism
+to identify the existence of an encounter in real-time. 
+In our protocol, we design two stages for the tags, 
 namely detecting stage and connecting stage.
 In detecting stage, a tag works a fraction of time in order to save energy,
 and transmits a beacon periodically to detect whether an encounter is happening at the moment.
@@ -107,12 +121,12 @@ When detected an acknowledgement, the tag switches to connecting stage and incre
 transmission frequency in order to establish links with other tags. To deal with interference 
 happening in connecting stage,
 a tag adaptively adjusts its transmitting probability: it increases the probability when 
-the channel is detected idle and reduces the probability when interference is detected.  
+the channel is detected idle and reduces the probability when the channel is detected busy.  
 
 
 The contributions of the paper are summarized as follows:
 \begin{itemize}
-\item[1)] We propose a robust encounter registration protocol  
+\item[1)] We propose a distributed encounter registration protocol  
 with detailed theoretical analysis. 
 \item[2)] We conduct extensive simulations and experiments. Our evaluation results show that, 
 compared to baseline methods, our protocol achieves better scalability.
@@ -121,8 +135,8 @@ compared to baseline methods, our protocol has better performance, regarding thr
 %The results also show the potential of applicability in various wireless mobile networks.
 \end{itemize}
 
-Our protocol can be widely applied to various wireless mobile networks, (e.g., mobile Ad hoc network management.)
-
+% Our protocol can be widely applied to various wireless mobile networks, 
+% (e.g., mobile Ad hoc network management.)
 
 %% Remaining structure
 The remainder of the paper is organized as follows. 
@@ -130,7 +144,7 @@ The next section highlights the related works.
 Section~\ref{sectionmodel} presents the system model and basic definitions.
 We present the concrete protocol design
 in Section~\ref{sectionprotocol}. 
-%  We analyze the performance of our protocol in Section~\ref{sectionanalysis}. 
-We carry out simulations for protocol validation in in Section~\ref{Simulations}
+We analyze the performance of our protocol in Section~\ref{sectionanalysis}. 
+We carry out simulations for protocol validation in Section~\ref{Simulations}
 and experiments for model validation in Section~\ref{experiments}.
 The paper is concluded in Section~\ref{sectionconclusion}.

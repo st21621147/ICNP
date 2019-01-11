@@ -1,16 +1,16 @@
 \section{Simulations for protocol validation}
 \label{Simulations}
 In this section,
-we evaluate the performance of our protocol by extensive simulations, 
-and the results show our protocol can achieve good scalability. 
-We also modeled the mobility and herd characteristics of wild animals,
+we evaluate the performance of our protocol by extensive simulations. 
+The results show our protocol can achieve good scalability. 
+We also model the mobility and herd characteristics of wild animals,
 and results validate the efficiency of our protocol.
 
 \subsection{Parameter Settings}
 
 To conduct the simulation tests, we carried out some pre-tests to determine the 
 parameters of our protocol.
-We selected the appropriate values and fixed the parameters as in Table~\ref{para}.
+We selected appropriate values and fixed the parameters as in Table~\ref{para}.
 
 \begin{table}[htbp]
 	\caption{Parameter Settings}
@@ -19,34 +19,35 @@ We selected the appropriate values and fixed the parameters as in Table~\ref{par
 	\scalebox{0.9}{
 	\begin{tabular}{|c|c|c|}
 		\hline
-        \textbf{Notation} & \textbf{value} & \textbf{Description}  \\
+        Notation & value & Description  \\
         \hline
-		\textbf{$2\hat{t_0}$} & \textbf{$20$ $ms$} & \makecell[l]{The time length of a synchronized slot in reality.}\\
+		$2\hat{t_0}$ & $20$ $ms$ & \makecell[l]{The time length of a synchronized slot in reality.}\\
         \hline
-        \textbf{$D$} & \textbf{$20$ $m$} & \makecell[l]{The radio range of tags.}\\
+        $D$ & $20$ $m$ & \makecell[l]{The radio range of tags.}\\
         \hline
-        \textbf{$\hat{T}$} & \textbf{$500$} & \makecell[l]{The pre-defined period of Connecting Stage.} \\
+        $\hat{T}$ & $500$ & \makecell[l]{The pre-defined period of Connecting Stage.} \\
 		\hline
-		\textbf{$\omega_0$} & \textbf{$0.5$} & \makecell[l]{Fixed transmitting probability in Detecting Stage.}\\
+		$\omega_0$ & $0.5$ & \makecell[l]{Fixed transmitting probability in Detecting \\ Stage.}\\
         \hline
-        \textbf{$\omega_t$} & \textbf{$0.5$} & \makecell[l]{Initial transmitting probability in Connecting Stage.}\\
+        $\omega_t$ & $0.5$ & \makecell[l]{Initial transmitting probability in Connecting \\ Stage.}\\
 		\hline
-		\textbf{$\zeta$} & \textbf{$0.5$} & \makecell[l]{Upper bound of the transmitting probability in \\ Connecting Stage.} \\
+		$\zeta$ & $0.5$ & \makecell[l]{Upper bound of the transmitting probability in \\ Connecting Stage.} \\
 		\hline
-		\textbf{$\epsilon$} & \textbf{$1.0$} & \makecell[l]{Adjustment factor in Connecting Stage.} \\
+		$\epsilon$ & $1.0$ & \makecell[l]{Adjustment factor in Connecting Stage.} \\
 		\hline		
     \end{tabular}
     }
 \end{table}
 
-Next, we selected the baseline methods to compare with our protocol. 
+Next, we selected the baseline methods to be compared with our protocol. 
 Existing methods for the encounter registration problem are mainly based on fixed transmitting 
 probability~\cite{Menhill2012NovelTelemetry,Rutz2012AutomatedMapping}
 (i.e., agents transmit a beacon with a fixed probability $p$ and listen with $1-p$).  
-Note that, if $p$ is too large, there would be multiple transmissions in a time slot which results in 
-collisions; if $p$ is too small, there would be no transmissions in a time slot which results 
+Note that, if $p$ is too large, there would be multiple transmissions in a time slot resulting in 
+collisions; if $p$ is too small, there would be no transmissions in a time slot resulting 
 in long latency for the encounter process.
-We tested different values of transmitting probabilities and chose the following three settings for comparison: 
+We tested different values of transmitting probabilities and chose the 
+following three settings for comparison: 
 \begin{itemize}
     \item \textbf{Baseline I:} fix the transmitting probability as $0.05$. 
     \item \textbf{Baseline II:} fix the transmitting probability as $0.1$. 
@@ -58,10 +59,10 @@ We tested different values of transmitting probabilities and chose the following
 
 The number of encounter animals in the wild varies from a handful to hundreds. 
 Therefore, scalability is a crucial factor for encounter protocols. 
-In our testbed, we first simulated a group of agents in a stable clique, to evaluate scalability 
+In our testbed, we simulated a group of agents in a stable clique, to evaluate scalability 
 regarding their number and duty cycle.
 
-\begin{figure}[!h]
+\begin{figure}[h]
     \centering
     \subfigure[]{\includegraphics[width=1.65in]{figures/figure1.eps}}
     \hspace{0.01in}
@@ -72,22 +73,7 @@ regarding their number and duty cycle.
     \label{fig_num}
 \end{figure}
 
-In Fig.~\ref{fig_num}, we fix the duty cycle as $0.25$ and 
-increase the number of agents from $10$ to $100$.
-Fig.~\ref{fig_num}~(a) illustrates
-the number of slots for the encounter process 
-of our protocol grows as the number of agents increases. Particularly,
-the slots needed in the detecting stage remain steady.
-This is because although more agents need to be switched to the connecting stage,
-they meanwhile add to the possibility
-that a listening agent turns to the connecting stage in each time slot.
-When compared to the baseline methods as showed in
-Fig.~\ref{fig_num}~(b), our protocol has the least latency in
-the encounter process, and the time of the other three methods increases
-markedly as the agent number grows while that of our protocol still
-stays at a low level.
-
-\begin{figure}[!h]
+\begin{figure}[h]
     \centering
     \subfigure[]{\includegraphics[width=1.65in]{figures/figure2.eps}}
     \hspace{0.01in}
@@ -97,26 +83,6 @@ stays at a low level.
     compares our protocol with the three baseline methods.}
     \label{fig_DC}
 \end{figure}
-
-\begin{figure*}[!t]
-    \includegraphics[width=.32\textwidth]{figures/AtoA}
-    \includegraphics[width=.32\textwidth]{figures/AtoG}
-    \includegraphics[width=.32\textwidth]{figures/GtoG}
-    \caption{Encounter examples of three fundamental cases}
-    \label{examples}
-\end{figure*}
-
-In Fig.~\ref{fig_DC}, we fix the the number of agents as $100$ and
-increase duty cycle from $0.05$ to $0.5$. Fig.~\ref{fig_DC}~(a) show 
-the time for encounter process of our protocol stays steady when duty cycle varies.
-Particularly, the slots needed in the detecting stage decreases when duty cycle increases.
-This is because higher duty cycle increases the probability that an agent is active in each slot.
-Also we can see in Fig.~\ref{fig_DC}~(b) that the baseline methods
-increase the latency as the duty cycle rises.
-
-Next, we record the encounter registration rate in each time slot.
-Encounter registration rate is defined as the proportion of agents that has been 
-recorded. 
 
 \begin{figure}[h]
     \centering
@@ -136,6 +102,41 @@ recorded.
     \label{fig6}
 \end{figure}
 
+In Fig.~\ref{fig_num}, we set the duty cycle as $0.25$ and 
+increase the number of agents from $10$ to $100$.
+Fig.~\ref{fig_num}~(a) illustrates
+the number of slots for the encounter process 
+of our protocol grows as the number of agents increases. Particularly,
+the slots needed in detecting stage remain steady.
+This is because although more agents need to be switched to connecting stage,
+they meanwhile add to the possibility
+that a listening agent turns to connecting stage in each time slot.
+When compared to the baseline methods as showed in
+Fig.~\ref{fig_num}~(b), our protocol has the least latency in
+the encounter process, and the time of the other three methods increases
+markedly as the agent number grows while that of our protocol still
+stays at a low level.
+
+In Fig.~\ref{fig_DC}, we set the the number of agents as $100$ and
+increase duty cycle from $0.05$ to $0.5$. Fig.~\ref{fig_DC}~(a) show 
+the time for encounter process of our protocol stays steady when duty cycle varies.
+Particularly, the slots needed in detecting stage decreases when duty cycle increases.
+This is because higher duty cycle increases the probability that an agent is active in each slot.
+Also we can see in Fig.~\ref{fig_DC}~(b) that the baseline methods
+increase the latency as the duty cycle rises.
+
+\begin{figure*}[!t]
+    \includegraphics[width=.32\textwidth]{figures/AtoA}
+    \includegraphics[width=.32\textwidth]{figures/AtoG}
+    \includegraphics[width=.32\textwidth]{figures/GtoG}
+    \caption{Encounter examples of three fundamental cases}
+    \label{examples}
+\end{figure*}
+
+Next, we record the encounter registration rate in each time slot.
+Encounter registration rate is defined as the proportion of agents that has been 
+recorded. 
+
 We set the number of agents as $100$, and fix
 duty cycle as $0.25$ in Fig.~\ref{fig5} and $0.5$ in Fig.~\ref{fig6}.
 The same trend can be seen that our protocol has higher encounter registration rate
@@ -145,6 +146,23 @@ In conclusion, our protocol outperforms the fixed transmitting probability metho
 and has better scalability. 
 
 \subsection{Mobility}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3in]{figures/figure7.eps}
+    \caption{Encounter for two agents. Our protocol
+    achieves $100\%$ encounter registration rate.}
+    \label{fig7}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3in]{figures/figure8.eps}
+    \caption{Encounter for a single 
+    agent with a group of agents. Overall, our protocol
+    achieves higher encounter registration rate.}
+    \label{fig8}
+\end{figure}
 
 The essential difference between a wildlife tracing system
 and a mobile wireless network is the variability among the animal
@@ -181,28 +199,11 @@ We evaluate our protocol in three simple and heuristic cases, as depicted in Fig
     apart, as depicted in Fig.~\ref{examples}(c).
 \end{itemize}
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=3in]{figures/figure7.eps}
-    \caption{Encounter for two agents. Our protocol
-    achieves $100\%$ encounter registration rate.}
-    \label{fig7}
-\end{figure}
-
 \subsubsection{Encounter for two agents}
 
 We can see from Fig.~\ref{fig7} that both
 agents employing our protocol can record each
 other regarding all the three species.
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=3in]{figures/figure8.eps}
-    \caption{Encounter for a single 
-    agent with a group of agents. Overall, our protocol
-    achieves higher encounter registration rate.}
-    \label{fig8}
-\end{figure}
 
 \subsubsection{Encounter for a single 
 agent with a group of agents}
@@ -216,7 +217,17 @@ rate regarding species II and species III.
 This is because these two species move more slowly than species I 
 so that the agents can be recorded in higher probabilities. 
 
-\begin{figure}[!h]
+\subsubsection{Encounter for two groups of agents}
+
+Fig.~\ref{fig9}~(a) shows the proportion of agents in group A 
+recorded by the agents in group B, and Fig.~\ref{fig9}~(b) depicts
+the opposite case. Overall, our protocol achieves higher encounter 
+registration rate than all the other methods. Particularly, species III
+has higher encounter registration rate than species II and III.
+This is because species III moves the most slowly and thus there are more 
+chances for agents to detect and connect to their peers. 
+
+\begin{figure}[h]
     \centering
     \subfigure[]{\includegraphics[width=1.65in]{figures/figure9_A.eps}}
     \hspace{0.01in}
@@ -227,16 +238,6 @@ so that the agents can be recorded in higher probabilities.
     achieves higher encounter registration rate.}
     \label{fig9}
 \end{figure}
-
-\subsubsection{Encounter for two groups of agents}
-
-Fig.~\ref{fig9}~(a) shows the proportion of agents in group A having 
-been recorded by the agents in group B, and Fig.~\ref{fig9}~(b) depicts
-the opposite case. Overall, our protocol achieves higher encounter 
-registration rate than all the other methods. Particularly, species III
-has higher encounter registration rate than species II and III.
-This is because species III moves the most slowly and thus there are more 
-chances for agents to detect and connect their peers. 
 
 \section{Experiments for model validation}
 \label{experiments}
@@ -291,7 +292,7 @@ This verifies that interference indeed blocks the receiver and may prevent packe
 
 \begin{figure}[h]
     \centering
-    \subfigure[]{\includegraphics[width=1.65in]{figures/rssiHistograms.eps}}
+    \subfigure[]{\includegraphics[width=1.7in]{figures/rssiHistograms.eps}}
     \hspace{0.01in}
     \subfigure[]{\includegraphics[width=1.4in]{figures/rssiDistance.eps}}
     \caption{Figure~(a) depicts RSSI of received packets at different distances between 

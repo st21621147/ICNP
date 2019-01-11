@@ -8,12 +8,12 @@ have been implemented in the wildlife-research community.
 In these systems, energy-restricted short-range radio devices 
 are attached to wild animals, transmitting identification
 packets periodically, receiving and recording packets from others.
-%    Encounters are common interactions of wild animals.
-%    Several real encounter-registration systems have been implemented
-%    to help record the encounter process. In these systems, wild animals
-%    are attached with energy-restricted radio devices called tags, 
-%    to transmit packets periodically
-%    and record the encounter process with others.
+    %    Encounters are common interactions of wild animals.
+    %    Several real encounter-registration systems have been implemented
+    %    to help record the encounter process. In these systems, wild animals
+    %    are attached with energy-restricted radio devices called tags, 
+    %    to transmit packets periodically
+    %    and record the encounter process with others.
 However, non-trivial protocols for this problem have not been studied, and neither did the
 fundamental tradeoff 
 between minimizing the power consumption 
@@ -21,18 +21,20 @@ and reducing the encounter latency.
 The key challenge is the uncertain mobility and herd characteristics of wild 
 animals and our dominant strategy is to design a mechanism
 to identify the existence of an encounter in real-time.
-% Our insight is that it is reasonable for a tag to
-% increase the working frequency of its radio when encounter happens; otherwise it keeps
+    % Our insight is that it is reasonable for a tag to
+    % increase the working frequency of its radio when encounter happens; otherwise it keeps
 % the radio in a low-power mode.  
-
-In this paper, we propose a robust encounter registration protocol.
-Our protocol consists of two processes: detect other tags with low energy consumption; 
-and make connections with the detected tags to record each other's ID. 
-We present extensive simulations and experiments that verify the scalability
-of the protocol. Also, we present explicit animal models of mobility and evaluation results
-show the strengths of our protocol in mobile wildlife environment.
-To the best of our knowledge, this is the first detailed description of 
-a encounter-registration protocol for real wireless mobile networks.
-
+    
+In this paper, we propose a distributed encounter registration protocol,
+which consists of two processes: detect other tags with low energy consumption; 
+and make connections to the detected tags to record each other's ID. 
+Theoretical bounds of the protocol on time slots to complete the task are shown. 
+We also present extensive simulations and experiments to verify the scalability
+of the protocol. Moreover, we present explicit animal models of the mobility and 
+to show the strengths of the protocol in mobile wildlife environment.
+To the best of our knowledge, this is the first protocol with both good theoretical and
+practical performance for the encounter-registration problem in real wildlife tracing systems.
+    
 \end{abstract}
-
+    
+    

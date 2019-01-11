@@ -209,6 +209,7 @@ are constants defined in Lemma~\ref{safe}.
     with ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) < \frac{3}{4}{\sum}_{u\in S_t}\omega_t(u)$,
     with probability $1-O(k^{-1})$.
 \end{lemma}
+
 \begin{IEEEproof}
     Let $T := \gamma\log k$, and let $X_t$ denote the random variable that indicates the value of 
     ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u)$. Then
@@ -220,7 +221,6 @@ are constants defined in Lemma~\ref{safe}.
     $1-O(k^{-1})$, there are at least $T\cdot\frac{3}{4}$ slots $t$ with 
     ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u) \leq 3/4$. 
 \end{IEEEproof}
-
 
 \begin{lemma}
     \label{lemma9}
@@ -245,7 +245,6 @@ are constants defined in Lemma~\ref{safe}.
     for large enough $\gamma$.
 \end{IEEEproof}
 
-
 \begin{lemma}
     \label{lemma10}
     There exists a constant $\hat{\alpha} \geq 0.01$ such that
@@ -255,6 +254,7 @@ are constants defined in Lemma~\ref{safe}.
         Pr[{\sum}_{u\in S_{t+1}}\omega_{t+1}(u) \geq \hat{\alpha}\cdot \frac{4}{3}] \geq \frac{7}{8}.
     \end{equation}
 \end{lemma}
+
 \begin{IEEEproof}
     Denote X as the random variable that indicates the value of 
     ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u)$. The probability that 
@@ -262,9 +262,9 @@ are constants defined in Lemma~\ref{safe}.
     $t$ is at least $4^{-\hat{\alpha}}$. Hence,
     \begin{equation*}
         Pr[X ={\sum}_{u\in S_t}2\cdot\omega_t(u)] 
-        \geq 1 - 4^{-\hat{\alpha}}
+        \geq 1 - 4^{-\hat{\alpha}},
     \end{equation*}
-    which is at least $7/8$ when $\hat{\alpha}$ is close to $0.01$. Hence,
+    which is at least $7/8$ when $\hat{\alpha}$ is close to $0.01$. Then,
     \begin{equation*}
         X \geq \frac{7}{8}\cdot 2\cdot\hat{\alpha} + 
         \frac{1}{8}\cdot \frac{1}{2}\hat{\alpha} 
@@ -272,10 +272,7 @@ are constants defined in Lemma~\ref{safe}.
     \end{equation*}
     Therefore, it holds with high probability that for small $\hat{\alpha}$ close to $0.01$, $Pr[{\sum}_{u\in S_t}\omega_{t+1}(u) 
     \leq \hat{\alpha}\cdot\frac{4}{3}] \geq \frac{7}{8}$.
-
-
 \end{IEEEproof}
-
 
 \begin{lemma}
     \label{lemma11}
@@ -285,22 +282,23 @@ are constants defined in Lemma~\ref{safe}.
     least $\frac{3}{4}\gamma\log k$ slots with ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u)
     \geq \frac{4}{3}{\sum}_{u\in S_t}\omega_t(u)$, with probability $1 - O(k^{-1})$.
 \end{lemma}
+
 \begin{IEEEproof}
-    Denote $T := \gamma\log k$, $X_t$ as the random variable that indicates the value of 
-    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u)$, and 
-    $Y_t$ to be the binary random variable that takes value $1$ if $X_t \leq \frac{4}{3}$.
+    Denote $T := \gamma\log k$, let $X_t$ denote the random variable that indicates the value of 
+    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u)$, and let
+    $Y_t$ denote the binary random variable that takes value $1$ if $X_t \leq \frac{4}{3}$.
     Note that given ${\sum}_{u\in S_t}\omega_t(u) \geq \hat{\alpha_1}$, $E[Y_t] \geq \frac{7}{8}$
     always hold. Hence, $E[\sum_{t=1}^{T}Y_t] \geq T\cdot\frac{7}{8}$, and it holds that
     $Pr[\sum_{t=1}^{T}Y_t\leq T\cdot\frac{3}{4}]$ by the Chernoff bound. That is with probability 
-    $1-O(k^{-1})$, there are at least $T\cdot\frac{4}{3}$ slots $t$ with  
+    $1-O(k^{-1})$, there are at least $T\cdot\frac{3}{4}$ slots $t$ with  
+    ${\sum}_{u\in S_{t+1}}\omega_{t+1}(u) / {\sum}_{u\in S_t}\omega_t(u) \geq \frac{4}{3}$.
 \end{IEEEproof}
-
 
 \begin{lemma}
     \label{lemma12}
-    Let $t_0$ be the first slot in which ${\sum}_{u\in S_t}\omega_t(u)$
-    drops below $\hat{\alpha_2}$. in the subsequent $T :=\tau\cdot\log k$ slots
-    where $\tau > 0$ and $k$ is large enough, the following hold:
+    Let $t_0$ denote the first slot in which ${\sum}_{u\in S_t}\omega_t(u)$
+    drops below $\hat{\alpha_2}$. In the subsequent $T :=\tau\cdot\log k$ slots,
+    where $\tau > 0$ and $k$ is large enough, the following conclusions hold:
     \begin{itemize}
         \item[(1)] there are at least $\frac{3}{4}\cdot T$ slots $t$
         with ${\sum}_{u\in S_t}\omega_t(u) \leq \alpha_2$, where $\alpha_2 > \hat{\alpha_2}$
@@ -316,7 +314,7 @@ are constants defined in Lemma~\ref{safe}.
 % \end{IEEEproof}
 
 With Lemma~\ref{safe},~\ref{lemma7},~\ref{lemma8},~\ref{lemma9},~\ref{lemma10},~\ref{lemma11} and
-\ref{lemma12}, we now prove Lemma~\ref{fast}.
+\ref{lemma12}, Lemma~\ref{fast} is proved.
 % \begin{IEEEproof}
 %     By Lemma~\ref{safe}, 
 % \end{IEEEproof}
@@ -329,9 +327,10 @@ This is formulated as the following lemma.
 
 \begin{lemma}
     \label{slow}
-    At time $T_3 :=T_2 +\gamma_2 \cdot \log k = O(k)$ it holds with high
+    At time $T_3 :=T_2 +\gamma_2 \cdot \log k = O(k)$, it holds with high
     probability that $|S_{T_3}| = 1$.
 \end{lemma}
+
 \begin{IEEEproof}
     After $T_2$ slots, it holds with high probability 
     that $|S_{T_2}| \leq \log k$. Then it takes at most $\gamma_2 \cdot \log k$
@@ -352,11 +351,12 @@ Finally we need to prove the following lemma.
     at time $T_4 := 2 \cdot T_3 + O(1) = O(k)$ it holds with high 
     probability that this agent successes to transmit.
 \end{lemma}
+
 \begin{IEEEproof}
     Since at time $T_3$ there is only one agent still attempting to transmit,
     the transmission probability will get to $\zeta$ at time $2\cdot T_3$ if it keeps
-    listening. Note that if agent $u$ transmit with probability $\zeta$ for $\log k$ slots,
-    where $d$
+    listening. Note that if agent $u$ transmits with probability $\zeta$ for $\log k$ slots, 
+    % where $d$
     then with high probability there exist one slot in which agent $u$ successes to transmit.
 \end{IEEEproof}
 
@@ -365,7 +365,7 @@ we get the upper bound $O(k)$ of {\pName} with respect to
 the clique size $k$. Note that, since the round of each agent may not be 
 synchronized, {\pName} requires an overlap of at least $T_4$ time 
 slots in a complete round between each agent.
-This can be easily solved as we set $\hat{T} := 2\cdot T_4$ in Algorithm~\ref{CA}. 
+This can be easily solved by setting $\hat{T} := 2\cdot T_4$ in Algorithm~\ref{CA}. 
 
 
 

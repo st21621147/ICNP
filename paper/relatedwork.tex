@@ -37,24 +37,21 @@ do not appear to have been commercialized or widely-used.
 
 \subsection{Protocol for encounter registration}
 
-Unfortunately, none of the papers that describe these systems and 
-ecological research give any details on the
-MAC-layer protocol that is used, nor on how the receiver is duty cycled. 
-Existing methods to encounter registration problem are mainly based on fixed transmitting 
+% Unfortunately, none of the papers that describe these systems and 
+% ecological research give any details on the
+% MAC-layer protocol that is used, nor on how the receiver is duty cycled. 
+Existing methods of encounter registration problem are mainly based on fixed transmitting 
 probability~\cite{Menhill2012NovelTelemetry,Rutz2012AutomatedMapping}
 (i.e., agents transmit a beacon with a fixed probability $p$ and listen with $1-p$). 
-In particular, it appears that many of these 
-protocols are not particularly efficient. For example, switching 
-an Encounternet tag with a particular battery from
-transmit-only mode 
+Many of these protocols are not particularly efficient. For example, switching 
+an Encounternet tag with a particular battery from transmit-only mode 
 to encounter-registration mode reduces the lifespan
 of the tag from 7.5 days to less than a day, indicating that the 
-receiver is active a significant fraction of the time.
+receiver is active during a significant fraction of the time.
 
 Although to the best of our knowledge, there has been no analyses of the protocols 
-for encounter registration problem,
-several similar problems are well-studied in the wireless network literature, 
-such as  
+for encounter registration problem, several similar problems are well-studied 
+in the wireless network literature, such as  
 minimum dominating set problem~\cite{Scheideler2008An,Yu2013Review},
 neighbor discovery problem~\cite{Bakht2012Searchlight, Sun2014Hello,Chen2015On}
 and information exchange problem~\cite{Capetanakis1979Tree,Daum2013Maximal,Yu2017Uniform}.
@@ -71,12 +68,13 @@ Information exchange problem~\cite{Capetanakis1979Tree,Daum2013Maximal,Yu2017Uni
 studied on the information propagation in a single-hop network. 
 In the network, there are active nodes with packets to transmit 
 and inactive nodes waiting to receive.
-
-However, protocols for these problems are not well applicable to encounter-registration systems.
-Whether an encounter is happening at the moment is unknown, making the problem much more complicated,
-and thus high efficiency (when an encounter happens)
-and low-energy consumption (when it does not) 
-can hardly be mutually exclusive.
+However, protocols for these problems can not be well 
+applicable to encounter-registration systems,
+because whether an encounter is happening at the moment is unknown, 
+making the problem much more complicated.
+% and thus high efficiency (when an encounter happens)
+% and low-energy consumption (when it does not) 
+% can hardly be mutually exclusive.
 
 % Why are the protocols for these problems not applicable to encounter registration problem?
 % the key characteristic satisfy 
